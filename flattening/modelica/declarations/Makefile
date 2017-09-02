@@ -2,6 +2,9 @@ TEST=../../../rtest -v
 
 TESTFILES=\
 Annotations.mo \
+BuiltinTime1.mo \
+BuiltinTimeInvalid1.mo \
+BuiltinTimeInvalid2.mo \
 CondDeclaration.mo \
 Constant1.mo \
 Constant2.mo \
@@ -34,6 +37,9 @@ DiscreteDeclConnector.mo \
 DiscreteDeclRecord.mo \
 DiscreteDeclType.mo \
 DoubleDeclaration.mo \
+DoubleClassDeclaration1.mo \
+DoubleClassDeclaration2.mo \
+DoubleFuncDeclaration.mo \
 ErrorExternalModel.mo\
 ErrorRecursionLimit.mo \
 FloatingPoint.mo \
@@ -64,6 +70,8 @@ ScopeDeclaration3.mo \
 ScopeModification1.mo \
 ScopeModification2.mo \
 TestPackageConstantHandling.mo \
+Ticket4276a.mo \
+Ticket4276b.mo \
 
 
 # test that currently fail. Move up when fixed. 

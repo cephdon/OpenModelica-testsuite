@@ -16,7 +16,7 @@ equation
   der(y1) = p*u;
   der(y2) = y1;
   b = der(y1) > 0;
-  when b then 
+  when b then
     i = pre(i) + 1;
   end when;
 end test_Bug2764;
@@ -26,14 +26,15 @@ getErrorString();
 translateModelFMU(test_Bug2764, version="2.0");
 getErrorString();
 
-system("cat modelDescription.xml | grep -v guid | grep -v generationDateAndTime | grep -v generationTool > modelDescription.tmp.xml");
+// unzip to console, quiet, extra quiet
+system("unzip -cqq test_Bug2764.fmu modelDescription.xml | grep -v guid | grep -v generationDateAndTime | grep -v generationTool > modelDescription.tmp.xml");
 readFile("modelDescription.tmp.xml");
 
 // Result:
 // true
 // ""
-// "SimCode: The model test_Bug2764 has been translated to FMU"
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "test_Bug2764.fmu"
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // 0
 // "<?xml version=\"1.0\" encoding=\"UTF-8\"?>
@@ -103,7 +104,7 @@ readFile("modelDescription.tmp.xml");
 //     valueReference=\"4\"
 //     variability=\"continuous\"
 //     causality=\"input\"
-//     initial=\"approx\">
+//     >
 //     <Real start=\"-2.0\"/>
 //   </ScalarVariable>
 //   <!-- Index of variable = \"6\" -->
@@ -152,8 +153,6 @@ readFile("modelDescription.tmp.xml");
 //       <Unknown index=\"3\" dependencies=\"5\" dependenciesKind=\"dependent\" />
 //       <Unknown index=\"4\" dependencies=\"1\" dependenciesKind=\"dependent\" />
 //     </Derivatives>
-//     <InitialUnknowns>
-//     </InitialUnknowns>
 //   </ModelStructure>
 // </fmiModelDescription>
 // "

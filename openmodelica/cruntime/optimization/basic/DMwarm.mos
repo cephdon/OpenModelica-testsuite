@@ -1,17 +1,12 @@
 // name: diesel_model_warm_start
 // status: correct
 
-setCommandLineOptions("+g=Optimica");
-getErrorString();
+setCommandLineOptions("+g=Optimica"); getErrorString();
+loadFile("DM.mo"); getErrorString();
 
-loadFile("DM.mo");
-getErrorString();
+optimize(diesel_model, stopTime=0.5, numberOfIntervals=450,tolerance=1e-10, simflags="-lv LOG_IPOPT_ERROR -optimizerNP 1 -exInputFile ./ReferenceFiles/initDM.csv -ipopt_warm_start 12 -emit_protected"); getErrorString();
 
-optimize(diesel_model, stopTime=0.5, numberOfIntervals=450,tolerance=1e-10, simflags="-lv LOG_IPOPT_ERROR -optimizerNP 1 -exInputFile ./ReferenceFiles/initDM.csv -ipopt_warm_start 12");
-getErrorString();
-
-res := OpenModelica.Scripting.compareSimulationResults("diesel_model_res.mat","ReferenceFiles/diesel_model_ref.mat","diesel_model_res.csv",0.05,0.0005);
-getErrorString();
+res := OpenModelica.Scripting.compareSimulationResults("diesel_model_res.mat","ReferenceFiles/diesel_model_ref.mat","diesel_model_res.csv",0.05,0.0005); getErrorString();
 
 // Result:
 // true
@@ -20,8 +15,9 @@ getErrorString();
 // ""
 // record SimulationResult
 //     resultFile = "diesel_model_res.mat",
-//     simulationOptions = "startTime = 0.0, stopTime = 0.5, numberOfIntervals = 450, tolerance = 1e-10, method = 'optimization', fileNamePrefix = 'diesel_model', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = '-lv LOG_IPOPT_ERROR -optimizerNP 1 -exInputFile ./ReferenceFiles/initDM.csv -ipopt_warm_start 12'",
-//     messages = "
+//     simulationOptions = "startTime = 0.0, stopTime = 0.5, numberOfIntervals = 450, tolerance = 1e-10, method = 'optimization', fileNamePrefix = 'diesel_model', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = '-lv LOG_IPOPT_ERROR -optimizerNP 1 -exInputFile ./ReferenceFiles/initDM.csv -ipopt_warm_start 12 -emit_protected'",
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:p_em(start = 0.339267, nominal = 1.01111, min = 0.337038, max = 1.01111, init = 0.339267)
@@ -40,23 +36,25 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
-// LOG_IPOPT_ERROR   | info    | max error is 0.00155101 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 0.00153088 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 0.00149587 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 0.00112746 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 0.000313173 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 0.000122479 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 8.56533e-05 for the approximation of the state p_em(time = 0.486667)
-// LOG_IPOPT_ERROR   | info    | max error is 2.37163e-06 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 4.55455e-07 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 1.16211e-07 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 2.528e-08 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 3.66949e-09 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 1.48172e-10 for the approximation of the state p_em(time = 0.485556)
-// LOG_IPOPT_ERROR   | info    | max error is 2.86101e-13 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 0.0015511 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00153097 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00149595 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00112748 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 0.000313137 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 0.000122445 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 8.56457e-05 for the approximation of the state p_em(time = 0.486667)
+// LOG_IPOPT_ERROR   | info    | max error is 2.37178e-06 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 4.55501e-07 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 1.16221e-07 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 2.52825e-08 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 3.66997e-09 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 1.48205e-10 for the approximation of the state p_em(time = 0.485556)
+// LOG_IPOPT_ERROR   | info    | max error is 2.86256e-13 for the approximation of the state p_em(time = 0.485556)
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
 // ""
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // endResult

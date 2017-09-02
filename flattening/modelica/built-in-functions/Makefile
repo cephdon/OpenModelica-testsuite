@@ -26,7 +26,7 @@ Delay8.mo \
 DerConstant1.mo \
 DerConstant2.mo \
 DerConstant3.mo \
-DiagonalSimplify1 \
+DiagonalSimplify1.mo \
 Div.mo \
 EventFunctions.mo \
 Exp.mo \
@@ -62,10 +62,12 @@ Sinh.mo \
 Skew.mo \
 Sqrt.mo \
 Sum.mo \
+SumArray.mo \
 SumScalar.mo \
 SumVar.mo \
 Symmetric.mo \
 Symmetric2.mo \
+Symmetric3.mo \
 Tan.mo \
 Tanh.mo \
 Transpose.mo \

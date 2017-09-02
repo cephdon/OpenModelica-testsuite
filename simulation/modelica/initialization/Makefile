@@ -9,17 +9,20 @@ bug_2504.mos \
 bug_2566.mos \
 bug_2583.mos \
 bug_2673.mos \
+bug_2673b.mos \
+bug_2830.mos \
 bug_2990.mos \
 bug_2994.mos \
 bug_3014.mos \
 bug_3052.mos \
+bug_3536.mos \
+bug_4387.mos \
 discreteTest01.mos \
 discreteTest02.mos \
 discreteTest03.mos \
 discreteTest04.mos \
 discreteTest05.mos \
 discreteTest06.mos \
-discreteTest07.mos \
 discreteTest08.mos \
 discreteTest09.mos \
 discreteTest10.mos \
@@ -29,6 +32,7 @@ filterBlock1.mos \
 fullRobot.mos \
 gaspropreties.mos \
 homotopy1.mos \
+homotopy2.mos \
 initial_equation.mos \
 parameters.mos \
 parameterWithoutBinding.mos \
@@ -40,6 +44,9 @@ scaling2.mos \
 SingularInitial.mos \
 singularJacobian.mos \
 startValue.mos \
+startValue1.mos \
+startValue2.mos \
+startValue3.mos \
 underdeterminedTest1.mos \
 underdeterminedTest2.mos \
 underdeterminedTest3.mos \
@@ -71,7 +78,7 @@ OverdeterminedInitialization.Fluid.TwoVolumesFullSteadyStatePressureAndTemperatu
 # test that currently fail. Move up when fixed.
 # Run make failingtest
 FAILINGTESTFILES = \
-bug_2830.mos \
+discreteTest07.mos \
 
 
 # Dependency files that are not .mo .mos or Makefile

@@ -3,9 +3,42 @@ TEST = ../../../rtest -v
 TESTFILES = \
 cse1.mos \
 cse2.mos \
+cse2_comSubExp.mos \
 cse3.mos \
-cseFunctionCall.mos \
-ThermoSysPro.Examples.SimpleExamples.TestCentrifugalPump1.mos
+cseFunctionCall1.mos \
+cseFunctionCall2.mos \
+cseFunctionCall3.mos \
+cseFunctionCall4.mos \
+cseFunctionCall4b.mos \
+cseFunctionCall4c.mos \
+cseFunctionCall4d.mos \
+cseFunctionCall5.mos \
+cseFunctionCall6.mos \
+cseFunctionCall7.mos \
+cseFunctionCall8.mos \
+cseTestCall1.mos \
+cseTestCall2.mos \
+cseTestCall3.mos \
+cseTestCall4.mos \
+cseTestCall5.mos \
+cseTestCall6.mos \
+cseTestCall7.mos \
+comSubExp1.mos \
+ThermoSysPro.Examples.SimpleExamples.TestCentrifugalPump1.mos \
+wrapFunctionCalls1.mos \
+wrapFunctionCalls2.mos \
+wrapFunctionCalls3.mos \
+wrapFunctionCalls4.mos \
+wrapFunctionCalls5.mos \
+wrapFunctionCalls6.mos \
+wrapFunctionCalls7.mos \
+wrapFunctionCalls8.mos \
+wrapFunctionCalls9.mos \
+wrapFunctionCalls10.mos \
+wrapFunctionCalls11.mos \
+wrapFunctionCalls12.mos \
+wrapFunctionCalls13.mos \
+wrapFunctionCalls14.mos \
 
 # test that currently fail. Move up when fixed. 
 # Run make testfailing
@@ -19,7 +52,8 @@ DEPENDENCIES = \
 *.mo \
 *.mos \
 Makefile \
-ReferenceFiles
+ReferenceFiles \
+cleanHpcOmTestsuite.py
 
 
 

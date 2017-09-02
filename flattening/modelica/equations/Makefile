@@ -3,6 +3,7 @@ TEST=../../../rtest -v
 TESTFILES=\
 ActivateWhenEquation.mo \
 BouncingBall.mo \
+Bug4124.mos \
 Circle.mo \
 ConditionalArrayExpression1.mo \
 ConditionalArrayExpression2.mo \
@@ -41,6 +42,7 @@ InOutBool.mo \
 LotkaVolterra.mo \
 ModifiedFiltersInSeries.mo \
 SimplePeriodicSampler.mo \
+Ticket4157.mos \
 TwoRateSampler.mo \
 VanDerPol.mo \
 VariableRange.mo \
@@ -49,10 +51,12 @@ WatchDog2EquationWhen.mo \
 WaveEquationSample.mo \
 WhenEquation.mo \
 WhenNestedEquation.mo \
+WhenNotInitial.mo \
 WhenNotValid.mo \
 WhenValidResult.mo \
 WhenSemantics1.mo \
-WhenVectorPredicateEquation.mo 
+WhenVectorPredicateEquation.mo \
+WhenWithArray.mo
 
 
 

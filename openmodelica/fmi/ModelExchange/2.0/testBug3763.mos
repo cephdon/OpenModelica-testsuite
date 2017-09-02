@@ -1,0 +1,17 @@
+// status: correct
+
+loadModel(Modelica);getErrorString();
+loadString("
+model DrumBoiler
+  extends Modelica.Fluid.Examples.DrumBoiler.DrumBoiler(use_inputs=false);
+end DrumBoiler;
+");
+translateModelFMU(DrumBoiler);getErrorString();
+
+// Result:
+// true
+// ""
+// true
+// "DrumBoiler.fmu"
+// ""
+// endResult

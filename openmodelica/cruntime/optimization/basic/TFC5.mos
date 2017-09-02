@@ -52,17 +52,15 @@ getErrorString();
 res := OpenModelica.Scripting.compareSimulationResults("testFinalCon5__res.mat","ReferenceFiles/testFinalCon5_ref.mat","testFinalCon_diff.csv",0.01,0.0001); // Files not equal!!! Testing other convergence with solveLinearSystem
 getErrorString();
 
-
-
 setCommandLineOptions("+maxSizeSolveLinearSystem=20"); getErrorString();
 echo(false);
-res := optimize(testFinalCon5, numberOfIntervals=700, tolerance = 1e-08, stopTime = 5, simflags="-lv LOG_IPOPT -optimizerNP 1");
+res := optimize(testFinalCon5, numberOfIntervals=700, tolerance = 1e-08, stopTime = 5, simflags="-lv LOG_IPOPT -optimizerNP 1 -iif ReferenceFiles/testFinalCon5_ref.mat -iim none -ipopt_init const");
 messages:=res.messages;
-echo(true);
+echo(false);
 res.resultFile;
 if regexBool(messages, "EXIT: Optimal Solution Found.") then
-  if regexBool(messages, "Number of Iterations....: 40") then
-    print("Number of Iterations....: 40\nEXIT: Optimal Solution Found.");
+  if regexBool(messages, "Number of Iterations....: 91") then
+    print("Number of Iterations....: 91\nEXIT: Optimal Solution Found.\n");
   else
     print("Number of Iterations changed.\tUpdate test\n");
     exit(1);
@@ -87,20 +85,14 @@ getErrorString();
 // true
 // "testFinalCon5__res.mat"
 // No optimal solution found
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files not Equal!","y2","y1","x2","x1","u","final_con2","final_con1","der(x2)","der(x1)","cost"}
-// "Warning: Files not Equal
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// Warning: Files not Equal
 // "
 // true
 // ""
-// true
-// "testFinalCon5_res.mat"
-// Number of Iterations....: 40
+// Number of Iterations....: 91
 // EXIT: Optimal Solution Found.
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
-// "
-// ""
-// {"Files Equal!"}
-// ""
 // endResult

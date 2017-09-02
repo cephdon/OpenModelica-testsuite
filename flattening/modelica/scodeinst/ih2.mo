@@ -1,7 +1,7 @@
 // name: ih2.mo
 // keywords:
 // status: correct
-// cflags:   +d=scodeInst
+// cflags:   -d=newInst
 //
 //
 
@@ -25,7 +25,7 @@ end A;
 
 // Result:
 // class A
-//   Integer i1 = 2;
-//   Integer i2 = 3;
+//   Integer i1 = P1.i;
+//   Integer i2 = P2.i;
 // end A;
 // endResult

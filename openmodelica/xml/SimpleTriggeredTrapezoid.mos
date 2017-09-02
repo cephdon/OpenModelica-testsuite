@@ -20,13 +20,13 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // "class SimpleTriggeredTrapezoid \"C2M2L_OM Range Pack Internals includes a triggered trapezoid.  This requires when equations and initial equations\"
 //   parameter Real tt.amplitude = 1.0 \"Amplitude of trapezoid\";
 //   parameter Real tt.rising(quantity = \"Time\", unit = \"s\", min = 0.0) = 0.5 \"Rising duration of trapezoid\";
+//   parameter Real tt.falling(quantity = \"Time\", unit = \"s\", min = 0.0) = 0.5 \"Falling duration of trapezoid\";
 //   parameter Real tt.offset = 1.0 \"Offset of output signal\";
 //   Boolean tt.u \"Connector of Boolean input signal\";
 //   Real tt.y \"Connector of Real output signal\";
 //   protected discrete Real tt.endValue \"Value of y at time of recent edge\";
 //   protected discrete Real tt.rate \"Current rising/falling rate\";
 //   protected discrete Real tt.T(quantity = \"Time\", unit = \"s\") \"Predicted time of output reaching endValue\";
-//   parameter Real tt.falling(quantity = \"Time\", unit = \"s\", min = 0.0) = 0.5 \"Falling duration of trapezoid\";
 //   Boolean b;
 // equation
 //   tt.y = if time < tt.T then tt.endValue + (time - tt.T) * tt.rate else tt.endValue;
@@ -47,31 +47,12 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 //                                                 xmlns:xlink=\"http://www.w3.org/1999/xlink\"
 //                                                 xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"
 //                                                 xsi:noNamespaceSchemaLocation=\"http://home.dei.polimi.it/donida/Projects/AutoEdit/Images/DAE.xsd\">
-// <variables dimension=\"10\">
-// <orderedVariables dimension=\"5\">
+// <variables dimension=\"12\">
+// <orderedVariables dimension=\"7\">
 // <variablesList>
 // <variable id=\"1\" name=\"b\" variability=\"discrete\" direction=\"none\" type=\"Boolean\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\">
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Boolean
-// </element>
-// </classesNames>
 // </variable>
 // <variable id=\"2\" name=\"tt.T\" variability=\"discrete\" direction=\"none\" type=\"Real\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Predicted time of output reaching endValue\">
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Modelica.SIunits.Time
-// </element>
-// </classesNames>
 // <attributesValues>
 // <quantity string=\"&quot;Time&quot;\">
 // <MathML>
@@ -92,50 +73,42 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </attributesValues>
 // </variable>
 // <variable id=\"3\" name=\"tt.rate\" variability=\"discrete\" direction=\"none\" type=\"Real\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Current rising/falling rate\">
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Real
-// </element>
-// </classesNames>
 // </variable>
 // <variable id=\"4\" name=\"tt.endValue\" variability=\"discrete\" direction=\"none\" type=\"Real\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Value of y at time of recent edge\">
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Real
-// </element>
-// </classesNames>
 // </variable>
 // <variable id=\"5\" name=\"tt.y\" variability=\"continuous\" direction=\"none\" type=\"Real\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Connector of Real output signal\">
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Modelica.Blocks.Interfaces.RealOutput
-// </element>
-// </classesNames>
+// </variable>
+// <variable id=\"6\" name=\"$whenCondition1\" variability=\"discrete\" direction=\"none\" type=\"Boolean\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\">
+// <attributesValues>
+// <fixed string=\"true\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <apply>
+// <true/>
+// </apply>
+// </math>
+// </MathML>
+// </fixed>
+// </attributesValues>
+// </variable>
+// <variable id=\"7\" name=\"$whenCondition2\" variability=\"discrete\" direction=\"none\" type=\"Boolean\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\">
+// <attributesValues>
+// <fixed string=\"true\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <apply>
+// <true/>
+// </apply>
+// </math>
+// </MathML>
+// </fixed>
+// </attributesValues>
 // </variable>
 // </variablesList>
 // </orderedVariables>
 // <knownVariables dimension=\"4\">
 // <variablesList>
 // <variable id=\"1\" name=\"tt.amplitude\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Amplitude of trapezoid\">
-// <bindValueExpression>
 // <bindExpression string=\"1.0\">
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
@@ -144,21 +117,8 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // </bindExpression>
-// </bindValueExpression>
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Real
-// </element>
-// </classesNames>
 // </variable>
 // <variable id=\"2\" name=\"tt.rising\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Rising duration of trapezoid\">
-// <bindValueExpression>
 // <bindExpression string=\"0.5\">
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
@@ -167,18 +127,6 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // </bindExpression>
-// </bindValueExpression>
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Modelica.SIunits.Time$tt$rising
-// </element>
-// </classesNames>
 // <attributesValues>
 // <quantity string=\"&quot;Time&quot;\">
 // <MathML>
@@ -206,8 +154,43 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </minValue>
 // </attributesValues>
 // </variable>
-// <variable id=\"3\" name=\"tt.offset\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Offset of output signal\">
-// <bindValueExpression>
+// <variable id=\"3\" name=\"tt.falling\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Falling duration of trapezoid\">
+// <bindExpression string=\"0.5\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <cn type=\"real\"> 0.5 
+// </cn>
+// </math>
+// </MathML>
+// </bindExpression>
+// <attributesValues>
+// <quantity string=\"&quot;Time&quot;\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <cn type=\"constant\"> Time 
+// </cn>
+// </math>
+// </MathML>
+// </quantity>
+// <unit string=\"&quot;s&quot;\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <cn type=\"constant\"> s 
+// </cn>
+// </math>
+// </MathML>
+// </unit>
+// <minValue string=\"0.0\">
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <cn type=\"real\"> 0.0 
+// </cn>
+// </math>
+// </MathML>
+// </minValue>
+// </attributesValues>
+// </variable>
+// <variable id=\"4\" name=\"tt.offset\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Offset of output signal\">
 // <bindExpression string=\"1.0\">
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
@@ -216,74 +199,12 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // </bindExpression>
-// </bindValueExpression>
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Real
-// </element>
-// </classesNames>
-// </variable>
-// <variable id=\"4\" name=\"tt.falling\" variability=\"parameter\" direction=\"none\" type=\"Real\" fixed=\"true\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Falling duration of trapezoid\">
-// <bindValueExpression>
-// <bindExpression string=\"0.5\">
-// <MathML>
-// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
-// <cn type=\"real\"> 0.5 
-// </cn>
-// </math>
-// </MathML>
-// </bindExpression>
-// </bindValueExpression>
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Modelica.SIunits.Time$tt$falling
-// </element>
-// </classesNames>
-// <attributesValues>
-// <quantity string=\"&quot;Time&quot;\">
-// <MathML>
-// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
-// <cn type=\"constant\"> Time 
-// </cn>
-// </math>
-// </MathML>
-// </quantity>
-// <unit string=\"&quot;s&quot;\">
-// <MathML>
-// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
-// <cn type=\"constant\"> s 
-// </cn>
-// </math>
-// </MathML>
-// </unit>
-// <minValue string=\"0.0\">
-// <MathML>
-// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
-// <cn type=\"real\"> 0.0 
-// </cn>
-// </math>
-// </MathML>
-// </minValue>
-// </attributesValues>
 // </variable>
 // </variablesList>
 // </knownVariables>
 // <aliasVariables dimension=\"1\">
 // <variablesList>
 // <variable id=\"1\" name=\"tt.u\" variability=\"discrete\" direction=\"none\" type=\"Boolean\" fixed=\"false\" flow=\"NonConnector\" stream=\"NonStreamConnector\" comment=\"Connector of Boolean input signal\">
-// <bindValueExpression>
 // <bindExpression string=\"b\">
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
@@ -292,60 +213,15 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // </bindExpression>
-// </bindValueExpression>
-// <classesNames>
-// <element>
-// SimpleTriggeredTrapezoid
-// </element>
-// <element>
-// Modelica.Blocks.Logical.TriggeredTrapezoid$tt
-// </element>
-// <element>
-// Modelica.Blocks.Interfaces.BooleanInput
-// </element>
-// </classesNames>
 // </variable>
 // </variablesList>
 // </aliasVariables>
 // </variables>
-// <equations dimension=\"5\">
-// <equation id=\"1\">b = if time &gt; 5.0 then time &lt; 9.0 else false
-// <MathML>
-// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
-// <apply>
-// <equivalent/>
-// <ci> b 
-// </ci>
-// <apply>
-// <piecewise>
-// <piece>
-// <apply>
-// <lt/>
-// <ci> time 
-// </ci>
-// <cn type=\"real\"> 9.0 
-// </cn>
-// </apply>
-// <apply>
-// <gt/>
-// <ci> time 
-// </ci>
-// <cn type=\"real\"> 5.0 
-// </cn>
-// </apply>
-// </piece>
-// <otherwise>
-// <apply>
-// <false/>
-// </apply>
-// </otherwise>
-// </piecewise>
-// </apply>
-// </apply>
-// </math>
-// </MathML>
-// </equation>
-// <whenEquation id=\"2\">tt.T := if b and not tt.rising &gt; 0.0 or not b and not tt.falling &gt; 0.0 or not abs(tt.amplitude) &gt; 0.0 or initial() then time else time + (tt.endValue - pre(tt.y)) / tt.rate
+// <equations dimension=\"7\">
+// <whenEquation id=\"1\">
+// <WhenOperator>
+// tt.T := if b and not tt.rising &gt; 0.0 or not b and not tt.falling &gt; 0.0 or not abs(tt.amplitude) &gt; 0.0 or initial() then time else time + (tt.endValue - pre(tt.y)) / tt.rate
+// </WhenOperator>
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -444,7 +320,7 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // <whenEquationCondition>
-// {initial(), b, not b}
+// {initial(), $whenCondition1, $whenCondition2}
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -453,20 +329,20 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // <apply>
 // <initial/>
 // </apply>
-// <ci> b 
+// <ci> $whenCondition1 
 // </ci>
-// <apply>
-// <not/>
-// <ci> b 
+// <ci> $whenCondition2 
 // </ci>
-// </apply>
 // </vector>
 // </apply>
 // </math>
 // </MathML>
 // </whenEquationCondition>
 // </whenEquation>
-// <whenEquation id=\"3\">tt.rate := if b and tt.rising &gt; 0.0 then tt.amplitude / tt.rising else if not b and tt.falling &gt; 0.0 then (-tt.amplitude) / tt.falling else 0.0
+// <whenEquation id=\"2\">
+// <WhenOperator>
+// tt.rate := if b and tt.rising &gt; 0.0 then tt.amplitude / tt.rising else if not b and tt.falling &gt; 0.0 then (-tt.amplitude) / tt.falling else 0.0
+// </WhenOperator>
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -539,7 +415,7 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // <whenEquationCondition>
-// {initial(), b, not b}
+// {initial(), $whenCondition1, $whenCondition2}
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -548,20 +424,20 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // <apply>
 // <initial/>
 // </apply>
-// <ci> b 
+// <ci> $whenCondition1 
 // </ci>
-// <apply>
-// <not/>
-// <ci> b 
+// <ci> $whenCondition2 
 // </ci>
-// </apply>
 // </vector>
 // </apply>
 // </math>
 // </MathML>
 // </whenEquationCondition>
 // </whenEquation>
-// <whenEquation id=\"4\">tt.endValue := if b then tt.offset + tt.amplitude else tt.offset
+// <whenEquation id=\"3\">
+// <WhenOperator>
+// tt.endValue := if b then tt.offset + tt.amplitude else tt.offset
+// </WhenOperator>
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -591,7 +467,7 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // <whenEquationCondition>
-// {initial(), b, not b}
+// {initial(), $whenCondition1, $whenCondition2}
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
 // <apply>
@@ -600,19 +476,52 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // <apply>
 // <initial/>
 // </apply>
-// <ci> b 
+// <ci> $whenCondition1 
 // </ci>
-// <apply>
-// <not/>
-// <ci> b 
+// <ci> $whenCondition2 
 // </ci>
-// </apply>
 // </vector>
 // </apply>
 // </math>
 // </MathML>
 // </whenEquationCondition>
 // </whenEquation>
+// <equation id=\"4\">b = if time &gt; 5.0 then time &lt; 9.0 else false
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <apply>
+// <equivalent/>
+// <ci> b 
+// </ci>
+// <apply>
+// <piecewise>
+// <piece>
+// <apply>
+// <lt/>
+// <ci> time 
+// </ci>
+// <cn type=\"real\"> 9.0 
+// </cn>
+// </apply>
+// <apply>
+// <gt/>
+// <ci> time 
+// </ci>
+// <cn type=\"real\"> 5.0 
+// </cn>
+// </apply>
+// </piece>
+// <otherwise>
+// <apply>
+// <false/>
+// </apply>
+// </otherwise>
+// </piecewise>
+// </apply>
+// </apply>
+// </math>
+// </MathML>
+// </equation>
 // <equation id=\"5\">tt.y = if time &lt; tt.T then tt.endValue + (time - tt.T) * tt.rate else tt.endValue
 // <MathML>
 // <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
@@ -658,6 +567,35 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </math>
 // </MathML>
 // </equation>
+// <equation id=\"6\">$whenCondition1 = b
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <apply>
+// <equivalent/>
+// <ci> $whenCondition1 
+// </ci>
+// <ci> b 
+// </ci>
+// </apply>
+// </math>
+// </MathML>
+// </equation>
+// <equation id=\"7\">$whenCondition2 = not b
+// <MathML>
+// <math xmlns=\"http://www.w3.org/1998/Math/MathML\">
+// <apply>
+// <equivalent/>
+// <ci> $whenCondition2 
+// </ci>
+// <apply>
+// <not/>
+// <ci> b 
+// </ci>
+// </apply>
+// </apply>
+// </math>
+// </MathML>
+// </equation>
 // </equations>
 // <zeroCrossingList dimension=\"3\">
 // <zeroCrossingElement string=\"time &gt; 5.0\">
@@ -674,7 +612,7 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </MathML>
 // <involvedEquations>
 // <equationId>
-// 1
+// 4
 // </equationId>
 // </involvedEquations>
 // </zeroCrossingElement>
@@ -692,7 +630,7 @@ readFile("SimpleTriggeredTrapezoid.xml"); getErrorString();
 // </MathML>
 // <involvedEquations>
 // <equationId>
-// 1
+// 4
 // </equationId>
 // </involvedEquations>
 // </zeroCrossingElement>

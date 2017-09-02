@@ -8,14 +8,14 @@
 
 runScript("../common/ModelTestingDefaults.mos"); getErrorString();
 
-modelTestingType := OpenModelicaModelTesting.Kind.Instantiation;
+modelTestingType := OpenModelicaModelTesting.Kind.VerifiedSimulation;
 modelName := $TypeName(Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine);
 compareVars :=
 {
    "x_zero"
 };
 
-runScript("common.mos");getErrorString();
+simulationRuntime := OpenModelicaModelTesting.SimulationRuntime.Cpp;
 
 runScript(modelTesting);getErrorString();
 
@@ -23,17 +23,19 @@ runScript(modelTesting);getErrorString();
 // "true
 // "
 // ""
-// OpenModelicaModelTesting.Kind.Instantiation
+// OpenModelicaModelTesting.Kind.VerifiedSimulation
 // Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine
 // {"x_zero"}
-// "OpenModelicaModelTesting.SimulationRuntime.Cpp
-// \"ReferenceFiles/Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine.mat\"
-// "
-// ""
-// Frontend failed
-// [lib/omlibrary/Modelica 3.2.1/Media/package.mo:8896:7-8900:41:writable] Error: Class Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine.Inverse_sine_definition.f_nonlinear not found in scope Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine.Inverse_sine_definition.solve (looking for a function or record).
-// [lib/omlibrary/Modelica 3.2.1/Media/package.mo:3886:7-3890:37:writable] Error: Class Inverse_sine_definition.solve not found in scope Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine (looking for a function or record).
-// Error: Error occurred while flattening model Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine
+// OpenModelicaModelTesting.SimulationRuntime.Cpp
+// Simulation options: startTime = 0.0, stopTime = 0.0, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''
+// Result file: Modelica.Media.Examples.SolveOneNonlinearEquation.Inverse_sine_res.mat
+// Messages: x_zero = 0.523599, y_zero = 0.500000, A*sin(w*x_zero) = 0.500000
+// x_zero = 0.523599, y_zero = 0.500000, A*sin(w*x_zero) = 0.500000
+// x_zero = 0.523599, y_zero = 0.500000, A*sin(w*x_zero) = 0.500000
+// x_zero = 0.523599, y_zero = 0.500000, A*sin(w*x_zero) = 0.500000
+// x_zero = 0.523599, y_zero = 0.500000, A*sin(w*x_zero) = 0.500000
+//
+// Files Equal!
 // "true
 // "
 // ""

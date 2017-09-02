@@ -1,15 +1,18 @@
 TEST = ../../../rtest -v 
 
 TESTFILES = \
+EngineV6_partlintorn.mos \
 MissV.mos \
 linSymSol.mos \
 linSymSolConstA.mos \
 NPendulum.mos \
+NPendulum40.mos \
 problem1.mos \
 problem2.mos \
 problem3.mos \
 constantStates.mos \
 Ticket2404.mos \
+Ticket3926.mos \
 
 # test that currently fail. Move up when fixed. 
 # Run make failingtest

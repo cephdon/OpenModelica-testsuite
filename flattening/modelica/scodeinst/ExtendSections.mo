@@ -1,7 +1,7 @@
 // name: ExtendSections
 // keywords:
 // status: correct
-// cflags: +d=scodeInst
+// cflags: -d=newInst
 //
 // Checks that sections are inherited correctly.
 //
@@ -48,12 +48,19 @@ end ExtendSections;
 //   Real y;
 //   Real z;
 //   Real w;
+// initial equation
+//   b = 2;
+//   y = 2;
+// initial algorithm
+//   d := 4;
+// initial algorithm
+//   w := 5;
 // equation
-//   x = 4.0;
-//   a = 1.0;
+//   a = 1;
+//   x = 4;
 // algorithm
-//   z := 3.0;
+//   c := 3;
 // algorithm
-//   c := 3.0;
+//   z := 3;
 // end ExtendSections;
 // endResult

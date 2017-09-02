@@ -56,4 +56,66 @@ package testSolver
     der(y[8]) = -der(y[7]);
   end problem2;
 
+  model problem3
+    Real x(start=1,fixed=true);
+    Real x1(start=1,fixed=true);
+    Real x2(start=1,fixed=true);
+    parameter Real c = 1;
+  equation
+    der(x) = c;
+    der(x1) = 2*time;
+    der(x2) = -x2;
+  end problem3;
+
+   model problem4
+    Real x(start=1,fixed=true);
+    Real x1(start=1,fixed=true);
+    Real x2(start=1,fixed=true);
+    Real x3(start=1,fixed=true);
+    Real x4(start=1,fixed=true);
+    Real x5(start=1,fixed=true);
+    Real x6(start=1,fixed=true);
+    Real x7(start=1,fixed=true);
+    constant Real c = 5;
+  equation
+    der(x) = c;
+    der(x1) = 2*time;
+    der(x2) = -x2;
+    der(x3) = x3;
+    der(x4) = x3*x2;
+    der(x5) = x5-x4*sin(x3);
+    der(x6) = cos(x5)*sin(x6);
+    der(x7) = (10 +abs(x1) + abs(x2) + abs(x3) + abs(x4))*x7;
+  end problem4;
+
+  model problem5
+    Real y[2](start=y0);
+    parameter Real y0[2] = { 1, 0};
+  equation
+    der(y[1]) = y[1] + 0.5*y[2];
+    der(y[2]) = 1.0*y[1] - 8.0*y[2];
+  end problem5;
+
+  model problem6
+    parameter Real e=0.7 "coefficient of restitution";
+    parameter Real g=9.81 "gravity acceleration";
+    Real h(start=1) "height of ball";
+    Real v "velocity of ball";
+    Boolean flying(start=true) "true, if ball is flying";
+    Boolean impact;
+    Real v_new;
+    discrete Integer n_bounce(start=0);
+  equation
+    impact = h <= 0.0;
+    der(v) = if flying then -g else 0;
+    der(h) = v;
+
+    when {h <= 0.0 and v <= 0.0,impact} then
+      v_new = if edge(impact) then -e*pre(v) else 0;
+      flying = v_new > 0;
+      reinit(v, v_new);
+      n_bounce=pre(n_bounce)+1;
+    end when;
+  end problem6;
+
 end testSolver;

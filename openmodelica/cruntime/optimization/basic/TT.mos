@@ -1,7 +1,7 @@
 // name: TimeTableTest
 // status: correct
 
-loadModel(Modelica);
+loadModel(Modelica, {"3.2.1"});
 getErrorString();
 
 setCommandLineOptions("+g=Optimica");
@@ -37,7 +37,8 @@ getErrorString();
 // record SimulationResult
 //     resultFile = "TimeTableTest_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 5.0, numberOfIntervals = 20, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'TimeTableTest', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:x(start = 0, nominal = 10, min = -5, max = 10, init = 1)
@@ -52,9 +53,11 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
 // ""
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // endResult

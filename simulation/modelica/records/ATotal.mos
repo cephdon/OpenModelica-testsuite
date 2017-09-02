@@ -141,10 +141,10 @@ simulate(A); getErrorString();
 //   vt := 8.61726105451295e-05 * temp;
 //   vtnom := 8.61726105451295e-05 * tnom;
 //   arg := 1.345417051337526e+20 + -3.621481323477592e+22 * phibtemp / temp;
-//   fact2 := temp / 300.15;
+//   fact2 := 0.003331667499583542 * temp;
 //   pbfact := -2.0 * vt * (1.5 * log(fact2) + 1.6021918e-19 * arg);
 //   arg1 := 1.345417051337526e+20 + -3.621481323477592e+22 * phibtnom / tnom;
-//   fact1 := tnom / 300.15;
+//   fact1 := 0.003331667499583542 * tnom;
 //   pbfact1 := -2.0 * vtnom * (1.5 * log(fact1) + 1.6021918e-19 * arg1);
 //   pbo := (phi0 - pbfact1) / fact1;
 //   junctionpot := pbfact + fact2 * pbo;
@@ -176,7 +176,7 @@ simulate(A); getErrorString();
 //   protected Real vte(quantity = \"ElectricPotential\", unit = \"V\");
 // algorithm
 //   vte := 8.61726105451295e-05 * temp * ncoeff;
-//   ret := vte * log(vte / (satcur * 1.414213562373095));
+//   ret := vte * log(0.7071067811865475 * vte / satcur);
 //   ret := if ret > 10000000000.0 then 10000000000.0 else ret;
 // end Modelica.Electrical.Spice3.Internal.Functions.junctionVCrit;
 //
@@ -465,20 +465,20 @@ simulate(A); getErrorString();
 //     out_qm.qm_capgd := 0.0;
 //   elseif vgst <= 0.0 then
 //     out_qm.qm_capgb := -0.5 * vgst * in_c.m_capOx / in_c.m_tPhi;
-//     out_qm.qm_capgs := 0.6666666666666666 * vgst * in_c.m_capOx / in_c.m_tPhi + in_c.m_capOx / 3.0;
+//     out_qm.qm_capgs := 0.6666666666666666 * vgst * in_c.m_capOx / in_c.m_tPhi + 0.3333333333333333 * in_c.m_capOx;
 //     out_qm.qm_capgd := 0.0;
 //   else
 //     vds := vgs - vgd;
 //     if in_c.m_vdsat <= vds then
-//       out_qm.qm_capgs := in_c.m_capOx / 3.0;
+//       out_qm.qm_capgs := 0.3333333333333333 * in_c.m_capOx;
 //       out_qm.qm_capgd := 0.0;
 //       out_qm.qm_capgb := 0.0;
 //     else
 //       vddif := 2.0 * in_c.m_vdsat - vds;
 //       vddif1 := in_c.m_vdsat - vds;
 //       vddif2 := vddif ^ 2.0;
-//       out_qm.qm_capgd := in_c.m_capOx * (0.3333333333333333 - in_c.m_vdsat ^ 2.0 / (vddif2 * 3.0));
-//       out_qm.qm_capgs := in_c.m_capOx * (0.3333333333333333 - vddif1 ^ 2.0 / (vddif2 * 3.0));
+//       out_qm.qm_capgd := 0.3333333333333333 * in_c.m_capOx * (1.0 - in_c.m_vdsat ^ 2.0 / vddif2);
+//       out_qm.qm_capgs := 0.3333333333333333 * in_c.m_capOx * (1.0 - vddif1 ^ 2.0 / vddif2);
 //       out_qm.qm_capgb := 0.0;
 //     end if;
 //   end if;
@@ -844,7 +844,7 @@ simulate(A); getErrorString();
 //             fermig := 0.5 * /*Real*/(in_m_type) * in_p.m_gateType * egfet1;
 //             wkfng := 3.25 + 0.5 * egfet1 - fermig;
 //           end if;
-//           wkfngs := wkfng + -3.25 + -0.5 * egfet1 - fermis;
+//           wkfngs := -3.25 + wkfng + -0.5 * egfet1 - fermis;
 //           if not in_p.m_gammaIsGiven > 0.5 then
 //             out_v.m_gamma := 5.761561600860045e-12 * sqrt(in_p.m_substrateDoping / out_v.m_oxideCapFactor);
 //           end if;
@@ -985,6 +985,8 @@ simulate(A); getErrorString();
 //   protected Real CONSTboltz(quantity = \"HeatCapacity\", unit = \"J/K\") = 1.3806226e-23;
 //   protected Real REFTEMP(quantity = \"ThermodynamicTemperature\", unit = \"K\", min = 0.0, start = 288.15, nominal = 300.0, displayUnit = \"degC\") = 300.15;
 //   protected Real CONSTroot2 = 1.414213562373095;
+//   protected Real CONSTvt0(unit = \"(J/K)/(A.s)\") = 0.02586470905512062;
+//   protected Real CONSTKoverQ(unit = \"(J/K)/(A.s)\") = 8.61726105451295e-05;
 //   protected Real CONSTe = 2.718281828459045;
 //   protected Real CKTgmin(quantity = \"Conductance\", unit = \"S\") = 1e-12;
 //   protected Real CKTnomTemp(quantity = \"ThermodynamicTemperature\", unit = \"K\", min = 0.0, start = 288.15, nominal = 300.0, displayUnit = \"degC\") = 300.15;
@@ -997,8 +999,6 @@ simulate(A); getErrorString();
 //   protected Real CKTabstol = 1e-15;
 //   protected Real CKTvolttol = 1e-10;
 //   protected Real CKTtemptol = 0.001;
-//   protected Real CONSTvt0(unit = \"(J/K)/(A.s)\") = 0.02586470905512062;
-//   protected Real CONSTKoverQ(unit = \"(J/K)/(A.s)\") = 8.61726105451295e-05;
 //   output SpiceConstants res;
 // end Modelica.Electrical.Spice3.Internal.SpiceConstants;
 //
@@ -1018,7 +1018,7 @@ simulate(A); getErrorString();
 //   input Real Celsius(quantity = \"ThermodynamicTemperature\", unit = \"degC\") \"Celsius value\";
 //   output Real Kelvin(quantity = \"ThermodynamicTemperature\", unit = \"K\", displayUnit = \"degC\", min = 0.0, start = 288.15, nominal = 300.0) \"Kelvin value\";
 // algorithm
-//   Kelvin := Celsius + 273.15;
+//   Kelvin := 273.15 + Celsius;
 // end Modelica.SIunits.Conversions.from_degC;
 //
 // class A
@@ -1071,6 +1071,8 @@ simulate(A); getErrorString();
 //   constant Real C.CONSTboltz(quantity = \"HeatCapacity\", unit = \"J/K\") = 1.3806226e-23;
 //   constant Real C.REFTEMP(quantity = \"ThermodynamicTemperature\", unit = \"K\", displayUnit = \"degC\", min = 0.0, start = 288.15, nominal = 300.0) = 300.15;
 //   constant Real C.CONSTroot2 = 1.414213562373095;
+//   constant Real C.CONSTvt0(unit = \"(J/K)/(A.s)\") = 0.02586470905512062;
+//   constant Real C.CONSTKoverQ(unit = \"(J/K)/(A.s)\") = 8.61726105451295e-05;
 //   constant Real C.CONSTe = 2.718281828459045;
 //   constant Real C.CKTgmin(quantity = \"Conductance\", unit = \"S\") = 1e-12;
 //   constant Real C.CKTnomTemp(quantity = \"ThermodynamicTemperature\", unit = \"K\", displayUnit = \"degC\", min = 0.0, start = 288.15, nominal = 300.0) = 300.15;
@@ -1083,8 +1085,6 @@ simulate(A); getErrorString();
 //   constant Real C.CKTabstol = 1e-15;
 //   constant Real C.CKTvolttol = 1e-10;
 //   constant Real C.CKTtemptol = 0.001;
-//   constant Real C.CONSTvt0(unit = \"(J/K)/(A.s)\") = 0.02586470905512062;
-//   constant Real C.CONSTKoverQ(unit = \"(J/K)/(A.s)\") = 8.61726105451295e-05;
 //   constant Integer m_type = 1;
 //   constant Boolean m_bInit = false;
 //   constant Real p.m_jctSatCurDensity(start = 0.0) = 0.0 \"JS, Bulk jct. sat. current density, input - use tSatCurDens\";
@@ -1119,7 +1119,7 @@ simulate(A); getErrorString();
 //   constant Real p.m_phiIsGiven = 0.0 \"Phi IsGivenValue\";
 //   constant Real p.m_gamma(quantity = \"ElectricPotential\", unit = \"V\", start = 0.0) = 0.0 \"GAMMA, Bulk threshold parameter\";
 //   constant Real p.m_gammaIsGiven = 0.0 \"Gamma IsGivenValue\";
-//   constant Real p.m_lambda(quantity = \"InversePotential\", unit = \"1/V\") = 0.0 \"Channel-length modulation\";
+//   constant Real p.m_lambda(quantity = \"InversePotential\", unit = \"1/V\", start = 0.0) = 0.0 \"Channel-length modulation\";
 //   constant Real p.m_substrateDoping(start = 0.0) = 0.0 \"NSUB, Substrate doping\";
 //   constant Real p.m_substrateDopingIsGiven = 0.0 \"Substrate doping IsGivenValue\";
 //   constant Real p.m_gateType(start = 1.0) = 1.0 \"TPG, Gate type\";
@@ -1132,7 +1132,7 @@ simulate(A); getErrorString();
 //   constant Real p.m_drainResistanceIsGiven = 0.0 \"Drain resistance IsGivenValue\";
 //   constant Real p.m_sourceResistance(quantity = \"Resistance\", unit = \"Ohm\", start = 0.0) = 0.0 \"RS, Source ohmic resistance\";
 //   constant Real p.m_sourceResistanceIsGiven = 0.0 \"Source resistance IsGivenValue\";
-//   constant Real p.m_transconductance(quantity = \"Transconductance\", unit = \"A/V2\") = 2e-05 \"input - use tTransconductance\";
+//   constant Real p.m_transconductance(quantity = \"Transconductance\", unit = \"A/V2\", start = 2e-05) = 2e-05 \"input - use tTransconductance\";
 //   constant Real p.m_transconductanceIsGiven = 0.0 \"Transconductance IsGivenValue\";
 //   constant Real p.m_tnom(quantity = \"ThermodynamicTemperature\", unit = \"K\", displayUnit = \"degC\", min = 0.0, start = 300.15, nominal = 300.0) = 300.15 \"TNOM, Parameter measurement temperature\";
 //   constant Real m.m_dTemp(quantity = \"ThermodynamicTemperature\", unit = \"K\", displayUnit = \"degC\", min = 0.0, start = 300.15, nominal = 300.0) = 300.15 \"TEMP, Device Temperature\";
@@ -1294,19 +1294,13 @@ simulate(A); getErrorString();
 //   constant Real cc.m_capgd(quantity = \"Capacitance\", unit = \"F\", min = 0.0) = 0.0;
 // end A;
 // "
-// "[simulation/modelica/records/ATotal.mo:1750:3-1750:176:writable] Error: Variable p: Duplicate modification of element  {start  =(untyped) 0.0}  and  = (typed)0.0 DAE.PROP(Real(quantity = "InversePotential", unit = "1/V"), C_CONST), value: 0.0 on component m_lambda.
-// [simulation/modelica/records/ATotal.mo:1750:3-1750:176:writable] Error: Variable p: Duplicate modification of element  {start  =(untyped) 2e-05}  and  = (typed)2e-05 DAE.PROP(Real(quantity = "Transconductance", unit = "A/V2"), C_CONST), value: 2e-05 on component m_transconductance.
-// Error: Duplicate modification of element  {start  =(untyped) 0.0}  and  = (typed)0.0 DAE.PROP(Real(quantity = "InversePotential", unit = "1/V"), C_CONST), value: 0.0 on component m_lambda.
-// Error: Duplicate modification of element  {start  =(untyped) 2e-05}  and  = (typed)2e-05 DAE.PROP(Real(quantity = "Transconductance", unit = "A/V2"), C_CONST), value: 2e-05 on component m_transconductance.
-// "
+// ""
 // record SimulationResult
 //     resultFile = "A_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'A', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = ""
-// end SimulationResult;
-// "[simulation/modelica/records/ATotal.mo:1750:3-1750:176:writable] Error: Variable p: Duplicate modification of element  {start  =(untyped) 0.0}  and  = (typed)0.0 DAE.PROP(Real(quantity = "InversePotential", unit = "1/V"), C_CONST), value: 0.0 on component m_lambda.
-// [simulation/modelica/records/ATotal.mo:1750:3-1750:176:writable] Error: Variable p: Duplicate modification of element  {start  =(untyped) 2e-05}  and  = (typed)2e-05 DAE.PROP(Real(quantity = "Transconductance", unit = "A/V2"), C_CONST), value: 2e-05 on component m_transconductance.
-// Error: Duplicate modification of element  {start  =(untyped) 0.0}  and  = (typed)0.0 DAE.PROP(Real(quantity = "InversePotential", unit = "1/V"), C_CONST), value: 0.0 on component m_lambda.
-// Error: Duplicate modification of element  {start  =(untyped) 2e-05}  and  = (typed)2e-05 DAE.PROP(Real(quantity = "Transconductance", unit = "A/V2"), C_CONST), value: 2e-05 on component m_transconductance.
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+// stdout            | info    | The simulation finished successfully.
 // "
+// end SimulationResult;
+// ""
 // endResult

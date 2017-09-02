@@ -1,13 +1,14 @@
 // name: testAlgLoop5
 // status: correct
 
-setCommandLineOptions("+gDynOpt +d=advanceTearing +loop2con=all");
+setCommandLineOptions("+gDynOpt --tearingStrictness=casual +loop2con=all --postOptModules-=wrapFunctionCalls"); //wrapFunctionCalls is deactivated, Ticket: 3710
 //setCommandLineOptions("+gDynOpt");
 getErrorString();
 
 loadString("
 model testAlgLoop5
-  Real t1(start=1, min = -0.4);
+  parameter Real one = 1;
+  Real t1(start=1, min = -0.4) annotation(tearingSelect = always);
   Real t2(start=1,min=-2,max=1/2) annotation(tearingSelect = always);
   Real t3(start=5);
   Real t4(start=5, min=1, max=5);
@@ -20,6 +21,7 @@ model testAlgLoop5
   input Real u3(min=-1,max=1, start=1);
   Real cost annotation(isLagrange = true);
   Real costM = sin(u*u1) annotation(isMayer = true);
+  Real dummyCon = one*con annotation(tearingSelect = always);
   Real con(min=1, start=1, max = 2.5) = 2*t3 + 3*t1 + t2 annotation(isConstraint=true);
   Real conDer(min=-2, start=1, max = 2) = der(x) annotation(isConstraint=true);
   Real fcon(min=0,max=0) = 10*der(x) annotation(isFinalConstraint = true);
@@ -40,10 +42,10 @@ end testAlgLoop5;
 ");
 getErrorString();
 
-optimize(testAlgLoop5, tolerance = 1e-12,simflags="-lv LOG_IPOPT_ERROR -optimizerNP 1 -ipopt_init CONST");
+optimize(testAlgLoop5, tolerance = 1e-12,simflags="-lv LOG_IPOPT_ERROR -optimizerNP 1 -ipopt_init CONST -iim=none -iif=ReferenceFiles/testAlgLoop5_ref.mat");
 getErrorString();
 
-res := OpenModelica.Scripting.compareSimulationResults("testAlgLoop5_res.mat","ReferenceFiles/testAlgLoop5_ref.mat","testAlgLoop5_diff.csv",0.01,0.0001);
+res := OpenModelica.Scripting.compareSimulationResults("testAlgLoop5_res.mat","ReferenceFiles/testAlgLoop5_ref.mat","testAlgLoop5_diff.csv",0.01,0.0001,{"u","u1","u2","u3","cost","fcon4","costM"});
 getErrorString();
 
 // Result:
@@ -53,20 +55,20 @@ getErrorString();
 // ""
 // record SimulationResult
 //     resultFile = "testAlgLoop5_res.mat",
-//     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 50, tolerance = 1e-12, method = 'optimization', fileNamePrefix = 'testAlgLoop5', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = '-lv LOG_IPOPT_ERROR -optimizerNP 1 -ipopt_init CONST'",
+//     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 50, tolerance = 1e-12, method = 'optimization', fileNamePrefix = 'testAlgLoop5', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = '-lv LOG_IPOPT_ERROR -optimizerNP 1 -ipopt_init CONST -iim=none -iif=ReferenceFiles/testAlgLoop5_ref.mat'",
 //     messages = "
 // Optimizer Variables
 // ========================================================
 // State[0]:x(start = 1, nominal = 3, min = -3, max = 3, init = 1)
 // State[1]:y(start = 1, nominal = 2, min = -Inf, max = +Inf, init = 1)
 // State[2]:z(start = -1, nominal = 1, min = -1, max = 0.5, init = -1)
-// Input[3]:OMC$Input10(start = 1, nominal = 2.5, min = 1, max = 2.5)
-// Input[4]:OMC$Input7(start = 0.5, nominal = 2, min = -2, max = 0.5)
-// Input[5]:OMC$Input8(start = 1, nominal = 1, min = -0.4, max = +Inf)
-// Input[6]:u(start = 1, nominal = 5, min = -5, max = 5)
-// Input[7]:u1(start = 1, nominal = 2, min = -1, max = 2)
-// Input[8]:u2(start = 1, nominal = 2, min = -1, max = 2)
-// Input[9]:u3(start = 1, nominal = 1, min = -1, max = 1)
+// Input[3]:$$con$con(start = 1, nominal = 2.5, min = 1, max = 2.5)
+// Input[4]:$t1(start = 1, nominal = 1, min = -0.4, max = +Inf)
+// Input[5]:$t2(start = 0.5, nominal = 2, min = -2, max = 0.5)
+// Input[6]:u(start = 1.54056, nominal = 5, min = -5, max = 5)
+// Input[7]:u1(start = 0.566079, nominal = 2, min = -1, max = 2)
+// Input[8]:u2(start = -0.239925, nominal = 2, min = -1, max = 2)
+// Input[9]:u3(start = -1, nominal = 1, min = -1, max = 1)
 // --------------------------------------------------------
 // number of nonlinear constraints: 5
 // ========================================================
@@ -77,43 +79,50 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
-// LOG_IPOPT_ERROR   | info    | max violation is 8.30209 for the constraint $OMC$con$Loop$8(time = 0.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 7.14843 for the constraint $OMC$con$Loop$8(time = 0.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 5.11662 for the constraint $OMC$con$Loop$8(time = 0.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.77066 for the constraint $OMC$con$Loop$8(time = 1)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.288946 for the constraint $OMC$con$Loop$8(time = 0.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.0698992 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max error is 0.163209 for the approximation of the state y(time = 46.6)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.198041 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.0337475 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.32386 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.106291 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.032108 for the final constraint $OMC$finalConstarintTerm1(time = 50)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.0190454 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00884559 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00633437 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00274356 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00141538 for the constraint $OMC$con$Loop$8(time = 49)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000985566 for the constraint $OMC$con$Loop$8(time = 49)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000390077 for the constraint $OMC$con$Loop$8(time = 0.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000356312 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000196239 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00126455 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000161058 for the constraint $OMC$con$Loop$8(time = 48.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000157652 for the constraint $OMC$con$Loop$8(time = 48.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000680086 for the constraint $OMC$con$Loop$8(time = 48.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000372069 for the constraint $OMC$con$Loop$8(time = 48.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 2.30058e-05 for the constraint $OMC$con$Loop$8(time = 48.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.96917e-06 for the constraint $OMC$con$Loop$8(time = 48.8)
-// LOG_IPOPT_ERROR   | info    | max violation is 3.4249e-07 for the constraint $OMC$con$Loop$8(time = 4.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 6.99934e-08 for the constraint $OMC$con$Loop$8(time = 4.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $OMC$constarintTerm2(time = 47.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $OMC$constarintTerm2(time = 47.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $OMC$constarintTerm2(time = 47.4)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $OMC$constarintTerm2(time = 47.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 17.425 for the final constraint $finalCon$fcon3(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 11.1798 for the final constraint $finalCon$fcon3(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 9.17081 for the final constraint $finalCon$fcon3(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 4.81529 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 2.60632 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.0277274 for the constraint $EqCon$$con$con(time = 0.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.438649 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.449637 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.0593311 for the constraint $EqCon$$con$con(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.465635 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.265803 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.257776 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.219093 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.0393324 for the final constraint $finalCon$fcon(time = 50)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00971726 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00522208 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.0008537 for the constraint $EqCon$t2(time = 0.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.000581587 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00030624 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.000611677 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00027864 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00121425 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.00112002 for the constraint $EqCon$t2(time = 48.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 0.000855813 for the constraint $EqCon$t2(time = 48.2)
+// LOG_IPOPT_ERROR   | info    | max violation is 2.22306e-05 for the constraint $EqCon$t2(time = 48.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 2.18283e-05 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.04517e-05 for the constraint $EqCon$t2(time = 48.8)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.29938e-06 for the constraint $EqCon$t2(time = 4.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 2.02641e-07 for the constraint $EqCon$t2(time = 4.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 3.68416e-08 for the constraint $EqCon$t2(time = 4.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $con$conDer(time = 47.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $con$conDer(time = 47.4)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.99957e-08 for the constraint $con$conDer(time = 47.4)
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// ""
+// "Notification: Following iteration variables are selected by the user for strong component 1 (DAE kind: initialization):
+//   t2:VARIABLE(min = -2.0 max = 0.5 start = 1.0 )  type: Real 
+//   t1:VARIABLE(min = -0.4 start = 1.0 )  type: Real
+// Notification: Following iteration variables are selected by the user for strong component 2 (DAE kind: simulation):
+//   t1:VARIABLE(min = -0.4 start = 1.0 )  type: Real 
+//   t2:VARIABLE(min = -2.0 max = 0.5 start = 1.0 )  type: Real
+// "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // endResult

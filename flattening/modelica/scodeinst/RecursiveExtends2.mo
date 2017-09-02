@@ -1,7 +1,7 @@
 // name: RecursiveExtends2
 // keywords:
 // status: incorrect
-// cflags: +d=scodeInst
+// cflags: -d=newInst
 //
 // Checks that the compiler catches recursive extends.
 //
@@ -9,7 +9,10 @@
 model A
   model B
     extends A;
+    Real x;
   end B;
+
+  B b;
 end A;
 
 model RecursiveExtends2

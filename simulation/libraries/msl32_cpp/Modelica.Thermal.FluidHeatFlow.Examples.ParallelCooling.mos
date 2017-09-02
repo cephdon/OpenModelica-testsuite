@@ -19,7 +19,7 @@ compareVars :=
    "heatCapacitor2.T"
 };
 
-runScript("common.mos");getErrorString();
+simulationRuntime := OpenModelicaModelTesting.SimulationRuntime.Cpp;
 
 runScript(modelTesting);getErrorString();
 
@@ -30,14 +30,11 @@ runScript(modelTesting);getErrorString();
 // OpenModelicaModelTesting.Kind.VerifiedSimulation
 // Modelica.Thermal.FluidHeatFlow.Examples.ParallelCooling
 // {"pipe1.T","pipe2.T","pipe3.T","heatCapacitor1.T","heatCapacitor2.T"}
-// "OpenModelicaModelTesting.SimulationRuntime.Cpp
-// \"ReferenceFiles/Modelica.Thermal.FluidHeatFlow.Examples.ParallelCooling.mat\"
-// "
-// ""
+// OpenModelicaModelTesting.SimulationRuntime.Cpp
 // Simulation options: startTime = 0.0, stopTime = 1.0, numberOfIntervals = 1000, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Modelica.Thermal.FluidHeatFlow.Examples.ParallelCooling', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''
 // Result file: Modelica.Thermal.FluidHeatFlow.Examples.ParallelCooling_res.mat
 // Files Equal!
-// Warning: There are iteration variables with default zero start attribute. Use +d=initialization for more information.
+// Warning: There are iteration variables with default zero start attribute. For more information set +d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("+d=initialization").
 //
 // "true
 // "

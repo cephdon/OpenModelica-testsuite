@@ -1,13 +1,24 @@
 TEST = ../../rtest -v
 
 TESTFILES = \
+VendorAnnotation.mos \
+AddClassAnnotation.mos \
 ArraySlicing.mos \
+Buildings.PartialFlowMachine.mos \
 Bug2871.mos \
 Bug2943.mos \
 Bug2882.mos \
 Bug3269_deleteFile.mos \
 Bug3282.mos \
+Bug3417.mos \
+Bug3520.mos \
+Bug3783.mos \
+Bug3974.mos \
+Bug3979.mos \
+Bug4209.mos \
+Bug4248.mos \
 ConvertUnits.mos \
+CopyClass.mos \
 choicesAllMatching.mos \
 DefaultComponentName.mos \
 DeleteConnection.mos \
@@ -21,9 +32,14 @@ ForStatement5fail.mos \
 ForStatement6.mos \
 ForStatement7.mos \
 ForStatement8.mos \
+getClassNames.mos \
+getCommandLineOptions.mos \
+GetComponents.mos \
 getDialogAnnotation.mos \
+getIconAnnotation.mos \
 IfStatementIllegal.mos \
 IfStatement.mos\
+IllegalGraphics.mos\
 interactive_api_annotations.mos \
 interactive_api_attributes.mos \
 interactive_api_calls.mos \
@@ -38,20 +54,26 @@ ListMultilineComment.mos \
 loadFileInteractiveQualified.mos \
 matrices.mos \
 Modelica.Media.Examples.getComponents.mos \
+MoveClass.mos \
 ProtectedHandlingBug2917.mos \
 refactorGraphAnn1.mos \
 refactorGraphAnn2.mos \
 regex.mos \
 Rename.mos \
 RunScript.mos \
+saveShort.mos \
 saveTotalModel.mos \
 setComponentComment.mos \
 setComponentModifierValue.mos \
+setSourceFileListFile.mos \
 showDoc.mos \
 simplify.mos \
 stringSplit.mos \
 strings.mos  \
 variables.mos \
+getDefinitions.mos \
+StateMachine.mos \
+
 
 # test that currently fail. Move up when fixed.
 # Run make testfailing

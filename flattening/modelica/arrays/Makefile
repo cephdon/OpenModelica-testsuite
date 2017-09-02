@@ -118,12 +118,14 @@ FillSubscriptsTest.mo \
 FixedFinalParameter.mo \
 InOutArray2.mo \
 InOutArray.mo \
+Matrix.mo \
 Matrix1.mo \
 Matrix2.mo \
+Matrix3.mo \
 MatrixAddition.mo \
 MatrixBrackets.mo \
 MatrixEquation.mo \
-Matrix.mo \
+MatrixImplCast.mo \
 MatrixMulVector.mo \
 MatrixPow.mo \
 MatrixRowIndexing.mo \
@@ -147,6 +149,7 @@ TestArrayUnknown.mo \
 TestFill.mo \
 TypeTest.mos \
 UnknownDimensionMod.mo \
+VectorizeConstCref2D.mo \
 VectorizeOneReturnValue.mo \
 VectorizeSeveralArguments.mo \
 WrongNumberOfSubscripts1.mo \

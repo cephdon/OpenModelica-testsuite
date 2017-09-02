@@ -1,10 +1,14 @@
 TEST = ../../../rtest -v
 
 TESTFILES = \
+world.mos \
+EngineV6_evalParams.mos \
+EngineV6_output.mos \
 Bug1687.mos \
 Bug1728.mos \
 Bug1987.mos \
 Bug2432.mos \
+Bug2536.mos \
 Bug2633.mos \
 Bug2704.mos \
 Bug2788.mos \
@@ -12,11 +16,15 @@ Bug2833.mos \
 Bug3023.mos \
 Bug3261.mos \
 Bug3323.mos \
+Bug3500.mos \
+Bug3687.mos \
 BugTest1830.mos \
 ChangeCorrect.mos \
 CombiTable1DBug.mos \
 ComplexAlgebraicLoop.mos \
+ComplexFun.mos \
 DiscreteVectorStateSpace.mos \
+Elevator.mos \
 EquationCallIntegerArray.mos \
 ExtendsBasic.mos  \
 FrameTest.mos \
@@ -40,6 +48,7 @@ sample3.mos \
 SimResultScripting.mos \
 simulation.mos \
 SliceAssignment.mos \
+steadyState.mos \
 StringTest.mos \
 SyncFilter.mos \
 Switch.mos \
@@ -51,8 +60,26 @@ TestLapack.mos \
 TestExpressionSolve.mos \
 TestNormVar.mos \
 TestSolve.mos \
+TestSolve2.mos \
+TestSolve3.mos \
+TestSolve4.mos \
+TestSolve5.mos \
+TestSolve6.mos \
+TestSolve7.mos \
+TestSolve8.mos \
+TestSolve9.mos \
+TestSolve10.mos \
+TestSolve11.mos \
+TestSolve12.mos \
+TestSolve13.mos \
+TestSolve14.mos \
+TestSolve15.mos \
+TestSolve16.mos \
+TestSolve17.mos \
+TestSolve18.mos \
 VariableFilter.mos \
-WhenStatement4.mos 
+WhenStatement4.mos \
+localKnownVars.mos
 
 
 # test that currently fail. Move up when fixed. 

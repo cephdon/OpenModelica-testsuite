@@ -1,5 +1,6 @@
 // name:     ComparePSD.mo [BUG: #2739]
 // keywords: redeclare function
+// cflags: -d=nogen
 // status:   correct
 //
 // Checks that it's possible to uniquely modify packages in different components having the same type
@@ -512,106 +513,42 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$IdealLowPass.PSD.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$IdealLowPass.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$IdealLowPass.PSD.PDF;
 //
-// function Noise.PRNG$IdealLowPass.PSD.PDF.RNG
+// function Noise.PRNG$IdealLowPass.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$IdealLowPass.PSD.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$IdealLowPass.PSD.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$IdealLowPass.PSD.PDF.RNG;
-//
-// function Noise.PRNG$IdealLowPass.PSD.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
 //   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
 // algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
+//   for i in 1:k loop
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//   end for;
 //   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$IdealLowPass.PSD.PDF.RNG.RNG;
-//
-// function Noise.PRNG$IdealLowPass.PSD.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$IdealLowPass.PSD.PDF.RNG.Seed;
+// end Noise.PRNG$IdealLowPass.RNG;
 //
 // function Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   states_internal := Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.Seed(states_in[1], 0, instance, 2);
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
 //   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
 //   end for;
 //   states_out := states_in;
 // end Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.RNG;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$IdealLowPass.SampleFreePDF0.RNG.Seed;
 //
 // function Noise.PRNG$IdealLowPass.SampleFreePSD0
 //   output Real rand_hold;
@@ -661,91 +598,12 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$IdealLowPass.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer k = 1;
-//   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.RNG;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$IdealLowPass.SampleFreePSD0.PDF.RNG.Seed;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreeRNG0.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$IdealLowPass.SampleFreeRNG0.RNG;
-//
-// function Noise.PRNG$IdealLowPass.SampleFreeRNG0.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$IdealLowPass.SampleFreeRNG0.Seed;
 //
 // function Noise.PRNG$IdealLowPass.Seed
 //   input Integer local_seed = 12345;
@@ -761,7 +619,7 @@ end ComparePSD;
 //   protected Integer[max(n, 2)] internal_states;
 // algorithm
 //   assert(n > 0, "You are seeding a state vector of size 0!");
-//   internal_states := cat(1, {local_seed, global_seed}, fill(0, max(n, 2) + -2));
+//   internal_states := cat(1, {local_seed, global_seed}, fill(0, -2 + max(n, 2)));
 //   for i in 1:k loop
 //     (dummy, internal_states) := Noise.RNG.SampleBased.RNG_MRG(real_seed, internal_states, a, c, m);
 //   end for;
@@ -782,106 +640,42 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$Linear.PSD.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$Linear.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$Linear.PSD.PDF;
 //
-// function Noise.PRNG$Linear.PSD.PDF.RNG
+// function Noise.PRNG$Linear.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$Linear.PSD.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$Linear.PSD.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$Linear.PSD.PDF.RNG;
-//
-// function Noise.PRNG$Linear.PSD.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
 //   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
 // algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
+//   for i in 1:k loop
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//   end for;
 //   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$Linear.PSD.PDF.RNG.RNG;
-//
-// function Noise.PRNG$Linear.PSD.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$Linear.PSD.PDF.RNG.Seed;
+// end Noise.PRNG$Linear.RNG;
 //
 // function Noise.PRNG$Linear.SampleFreePDF0.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   states_internal := Noise.PRNG$Linear.SampleFreePDF0.RNG.Seed(states_in[1], 0, instance, 2);
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
 //   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$Linear.SampleFreePDF0.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
 //   end for;
 //   states_out := states_in;
 // end Noise.PRNG$Linear.SampleFreePDF0.RNG;
-//
-// function Noise.PRNG$Linear.SampleFreePDF0.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$Linear.SampleFreePDF0.RNG.RNG;
-//
-// function Noise.PRNG$Linear.SampleFreePDF0.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$Linear.SampleFreePDF0.RNG.Seed;
 //
 // function Noise.PRNG$Linear.SampleFreePSD0
 //   output Real rand_hold;
@@ -930,91 +724,12 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$Linear.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$Linear.SampleFreePSD0.PDF;
-//
-// function Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer k = 1;
-//   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG;
-//
-// function Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.RNG;
-//
-// function Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$Linear.SampleFreePSD0.PDF.RNG.Seed;
-//
-// function Noise.PRNG$Linear.SampleFreeRNG0.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$Linear.SampleFreeRNG0.RNG;
-//
-// function Noise.PRNG$Linear.SampleFreeRNG0.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$Linear.SampleFreeRNG0.Seed;
 //
 // function Noise.PRNG$Linear.Seed
 //   input Integer local_seed = 12345;
@@ -1030,7 +745,7 @@ end ComparePSD;
 //   protected Integer[max(n, 2)] internal_states;
 // algorithm
 //   assert(n > 0, "You are seeding a state vector of size 0!");
-//   internal_states := cat(1, {local_seed, global_seed}, fill(0, max(n, 2) + -2));
+//   internal_states := cat(1, {local_seed, global_seed}, fill(0, -2 + max(n, 2)));
 //   for i in 1:k loop
 //     (dummy, internal_states) := Noise.RNG.SampleBased.RNG_MRG(real_seed, internal_states, a, c, m);
 //   end for;
@@ -1043,106 +758,42 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$WhiteNoise.PSD.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$WhiteNoise.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$WhiteNoise.PSD.PDF;
 //
-// function Noise.PRNG$WhiteNoise.PSD.PDF.RNG
+// function Noise.PRNG$WhiteNoise.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$WhiteNoise.PSD.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$WhiteNoise.PSD.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$WhiteNoise.PSD.PDF.RNG;
-//
-// function Noise.PRNG$WhiteNoise.PSD.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
 //   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
 // algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
+//   for i in 1:k loop
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//   end for;
 //   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$WhiteNoise.PSD.PDF.RNG.RNG;
-//
-// function Noise.PRNG$WhiteNoise.PSD.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$WhiteNoise.PSD.PDF.RNG.Seed;
+// end Noise.PRNG$WhiteNoise.RNG;
 //
 // function Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Integer k = 1;
 //   protected Integer[2] states_internal;
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   states_internal := Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.Seed(states_in[1], 0, instance, 2);
+//   states_internal := Noise.RNG.SampleFree.Seed(states_in[1], 0, instance, 2);
 //   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
+//     (rand, states_internal) := Noise.RNG.SampleFree.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
 //   end for;
 //   states_out := states_in;
 // end Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.RNG;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$WhiteNoise.SampleFreePDF0.RNG.Seed;
 //
 // function Noise.PRNG$WhiteNoise.SampleFreePSD0
 //   output Real rand_hold;
@@ -1166,91 +817,12 @@ end ComparePSD;
 //   input Real instance(quantity = "Time", unit = "s");
 //   input Integer[:] states_in;
 //   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
 //   input Real[2] interval = {-1.0, 1.0};
+//   output Integer[size(states_in, 1)] states_out;
 // algorithm
-//   (rand, states_out) := Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG(instance, states_in, 1);
+//   (rand, states_out) := Noise.PRNG$WhiteNoise.RNG(instance, states_in, 1);
 //   rand := rand * (interval[2] - interval[1]) + interval[1];
 // end Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer k = 1;
-//   protected Integer[2] states_internal;
-// algorithm
-//   states_internal := Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.Seed(states_in[1], 0, instance, 2);
-//   for i in 1:k loop
-//     (rand, states_internal) := Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.RNG(instance, {states_internal[1], states_internal[2]}, {134775813, 134775813}, 1, 1073741823);
-//   end for;
-//   states_out := states_in;
-// end Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.RNG;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$WhiteNoise.SampleFreePSD0.PDF.RNG.Seed;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreeRNG0.RNG
-//   input Real instance(quantity = "Time", unit = "s");
-//   input Integer[:] states_in;
-//   output Real rand;
-//   output Integer[size(states_in, 1)] states_out;
-//   input Integer[:] a = {134775813, 134775813};
-//   input Integer c = 1;
-//   input Integer m = 1073741823;
-// algorithm
-//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
-//   states_out := states_in;
-//   states_out[1] := 0;
-//   for i in 1:size(a, 1) loop
-//     states_out[1] := states_out[1] + a[i] * states_in[i];
-//   end for;
-//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
-//     states_out[1 + i] := states_in[i];
-//   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
-// end Noise.PRNG$WhiteNoise.SampleFreeRNG0.RNG;
-//
-// function Noise.PRNG$WhiteNoise.SampleFreeRNG0.Seed
-//   input Integer local_seed = 12345;
-//   input Integer global_seed = 67890;
-//   input Real real_seed = 1.234;
-//   input Integer n = 33;
-//   output Integer[n] states;
-// algorithm
-//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
-// end Noise.PRNG$WhiteNoise.SampleFreeRNG0.Seed;
 //
 // function Noise.PRNG$WhiteNoise.Seed
 //   input Integer local_seed = 12345;
@@ -1266,7 +838,7 @@ end ComparePSD;
 //   protected Integer[max(n, 2)] internal_states;
 // algorithm
 //   assert(n > 0, "You are seeding a state vector of size 0!");
-//   internal_states := cat(1, {local_seed, global_seed}, fill(0, max(n, 2) + -2));
+//   internal_states := cat(1, {local_seed, global_seed}, fill(0, -2 + max(n, 2)));
 //   for i in 1:k loop
 //     (dummy, internal_states) := Noise.RNG.SampleBased.RNG_MRG(real_seed, internal_states, a, c, m);
 //   end for;
@@ -1291,11 +863,43 @@ end ComparePSD;
 //     states_out[1] := states_out[1] + a[i] * states_in[i];
 //   end for;
 //   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
-//   for i in 1:size(a, 1) + -1 loop
+//   for i in 1:-1 + size(a, 1) loop
 //     states_out[1 + i] := states_in[i];
 //   end for;
-//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(m + -1));
+//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(-1 + m));
 // end Noise.RNG.SampleBased.RNG_MRG;
+//
+// function Noise.RNG.SampleFree.RNG
+//   input Real instance(quantity = "Time", unit = "s");
+//   input Integer[:] states_in;
+//   output Real rand;
+//   output Integer[size(states_in, 1)] states_out;
+//   input Integer[:] a = {134775813, 134775813};
+//   input Integer c = 1;
+//   input Integer m = 1073741823;
+// algorithm
+//   assert(size(states_in, 1) >= size(a, 1), "State must have at least as many elements as a!");
+//   states_out := states_in;
+//   states_out[1] := 0;
+//   for i in 1:size(a, 1) loop
+//     states_out[1] := states_out[1] + a[i] * states_in[i];
+//   end for;
+//   states_out[1] := integer(/*Real*/(mod(states_out[1] + c, m)));
+//   for i in 1:-1 + size(a, 1) loop
+//     states_out[1 + i] := states_in[i];
+//   end for;
+//   rand := abs(/*Real*/(states_out[1]) / /*Real*/(-1 + m));
+// end Noise.RNG.SampleFree.RNG;
+//
+// function Noise.RNG.SampleFree.Seed
+//   input Integer local_seed = 12345;
+//   input Integer global_seed = 67890;
+//   input Real real_seed = 1.234;
+//   input Integer n = 33;
+//   output Integer[n] states;
+// algorithm
+//   states := Noise.Utilities.Auxiliary.SeedReal(local_seed, global_seed, real_seed, n);
+// end Noise.RNG.SampleFree.Seed;
 //
 // function Noise.Utilities.Auxiliary.SeedReal
 //   input Integer local_seed;
@@ -1319,25 +923,19 @@ end ComparePSD;
 //   input Real x;
 //   output Real y;
 // algorithm
-//   y := if abs(x) > 5e-05 then sin(x) / x else 1.0 + x ^ 4.0 / 120.0 - x ^ 2.0 / 6.0;
+//   y := if abs(x) > 5e-05 then sin(x) / x else 1.0 + -0.1666666666666667 * x ^ 2.0 + 0.008333333333333333 * x ^ 4.0;
 // end Noise.Utilities.Math.sinc;
 //
 // class ComparePSD
 //   Real WhiteNoise.y;
 //   parameter Boolean WhiteNoise.useSampleBasedMethods = false;
 //   parameter Boolean WhiteNoise.infiniteFreq = false;
+//   protected parameter Real WhiteNoise.freq(quantity = "Frequency", unit = "Hz") = 0.5 / WhiteNoise.samplePeriod;
 //   parameter Real WhiteNoise.startTime(quantity = "Time", unit = "s") = 0.0;
 //   parameter Real WhiteNoise.samplePeriod(quantity = "Time", unit = "s") = 0.01;
 //   parameter Boolean WhiteNoise.enable = true;
 //   parameter Real WhiteNoise.y_off = 0.0;
 //   protected parameter Integer WhiteNoise.state_size = 33;
-//   protected Real WhiteNoise.t_last;
-//   parameter Integer WhiteNoise.localSeed = 123456789;
-//   parameter Boolean WhiteNoise.useGlobalSeed = true;
-//   Real WhiteNoise.y_hold;
-//   protected discrete Real WhiteNoise.dummy1;
-//   protected discrete Real WhiteNoise.dummy2;
-//   protected parameter Real WhiteNoise.freq(quantity = "Frequency", unit = "Hz") = 0.5 / WhiteNoise.samplePeriod;
 //   protected Integer WhiteNoise.state[1];
 //   protected Integer WhiteNoise.state[2];
 //   protected Integer WhiteNoise.state[3];
@@ -1371,23 +969,23 @@ end ComparePSD;
 //   protected Integer WhiteNoise.state[31];
 //   protected Integer WhiteNoise.state[32];
 //   protected Integer WhiteNoise.state[33];
+//   protected Real WhiteNoise.t_last;
+//   parameter Integer WhiteNoise.localSeed = 123456789;
+//   parameter Boolean WhiteNoise.useGlobalSeed = true;
 //   final parameter Integer WhiteNoise.seed = if WhiteNoise.useGlobalSeed then Noise.Utilities.Auxiliary.combineSeedLCG(WhiteNoise.localSeed, globalSeed.seed) else WhiteNoise.localSeed;
 //   final parameter Real WhiteNoise.DT = 0.5 / WhiteNoise.freq;
+//   Real WhiteNoise.y_hold;
+//   protected discrete Real WhiteNoise.dummy1;
+//   protected discrete Real WhiteNoise.dummy2;
 //   Real IdealLowPass.y;
 //   parameter Boolean IdealLowPass.useSampleBasedMethods = false;
 //   parameter Boolean IdealLowPass.infiniteFreq = false;
+//   protected parameter Real IdealLowPass.freq(quantity = "Frequency", unit = "Hz") = 0.5 / IdealLowPass.samplePeriod;
 //   parameter Real IdealLowPass.startTime(quantity = "Time", unit = "s") = 0.0;
 //   parameter Real IdealLowPass.samplePeriod(quantity = "Time", unit = "s") = 0.01;
 //   parameter Boolean IdealLowPass.enable = true;
 //   parameter Real IdealLowPass.y_off = 0.0;
 //   protected parameter Integer IdealLowPass.state_size = 33;
-//   protected Real IdealLowPass.t_last;
-//   parameter Integer IdealLowPass.localSeed = 123456789;
-//   parameter Boolean IdealLowPass.useGlobalSeed = true;
-//   Real IdealLowPass.y_hold;
-//   protected discrete Real IdealLowPass.dummy1;
-//   protected discrete Real IdealLowPass.dummy2;
-//   protected parameter Real IdealLowPass.freq(quantity = "Frequency", unit = "Hz") = 0.5 / IdealLowPass.samplePeriod;
 //   protected Integer IdealLowPass.state[1];
 //   protected Integer IdealLowPass.state[2];
 //   protected Integer IdealLowPass.state[3];
@@ -1421,23 +1019,23 @@ end ComparePSD;
 //   protected Integer IdealLowPass.state[31];
 //   protected Integer IdealLowPass.state[32];
 //   protected Integer IdealLowPass.state[33];
+//   protected Real IdealLowPass.t_last;
+//   parameter Integer IdealLowPass.localSeed = 123456789;
+//   parameter Boolean IdealLowPass.useGlobalSeed = true;
 //   final parameter Integer IdealLowPass.seed = if IdealLowPass.useGlobalSeed then Noise.Utilities.Auxiliary.combineSeedLCG(IdealLowPass.localSeed, globalSeed.seed) else IdealLowPass.localSeed;
 //   final parameter Real IdealLowPass.DT = 0.5 / IdealLowPass.freq;
+//   Real IdealLowPass.y_hold;
+//   protected discrete Real IdealLowPass.dummy1;
+//   protected discrete Real IdealLowPass.dummy2;
 //   Real Linear.y;
 //   parameter Boolean Linear.useSampleBasedMethods = false;
 //   parameter Boolean Linear.infiniteFreq = false;
+//   protected parameter Real Linear.freq(quantity = "Frequency", unit = "Hz") = 0.5 / Linear.samplePeriod;
 //   parameter Real Linear.startTime(quantity = "Time", unit = "s") = 0.0;
 //   parameter Real Linear.samplePeriod(quantity = "Time", unit = "s") = 0.01;
 //   parameter Boolean Linear.enable = true;
 //   parameter Real Linear.y_off = 0.0;
 //   protected parameter Integer Linear.state_size = 33;
-//   protected Real Linear.t_last;
-//   parameter Integer Linear.localSeed = 123456789;
-//   parameter Boolean Linear.useGlobalSeed = true;
-//   Real Linear.y_hold;
-//   protected discrete Real Linear.dummy1;
-//   protected discrete Real Linear.dummy2;
-//   protected parameter Real Linear.freq(quantity = "Frequency", unit = "Hz") = 0.5 / Linear.samplePeriod;
 //   protected Integer Linear.state[1];
 //   protected Integer Linear.state[2];
 //   protected Integer Linear.state[3];
@@ -1471,8 +1069,14 @@ end ComparePSD;
 //   protected Integer Linear.state[31];
 //   protected Integer Linear.state[32];
 //   protected Integer Linear.state[33];
+//   protected Real Linear.t_last;
+//   parameter Integer Linear.localSeed = 123456789;
+//   parameter Boolean Linear.useGlobalSeed = true;
 //   final parameter Integer Linear.seed = if Linear.useGlobalSeed then Noise.Utilities.Auxiliary.combineSeedLCG(Linear.localSeed, globalSeed.seed) else Linear.localSeed;
 //   final parameter Real Linear.DT = 0.5 / Linear.freq;
+//   Real Linear.y_hold;
+//   protected discrete Real Linear.dummy1;
+//   protected discrete Real Linear.dummy2;
 //   parameter Integer globalSeed.userSeed = 1;
 //   final parameter Integer globalSeed.seed = globalSeed.userSeed;
 // equation

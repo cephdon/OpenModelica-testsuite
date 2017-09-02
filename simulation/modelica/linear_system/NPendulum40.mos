@@ -1,0 +1,39 @@
+// name:      NPendulum40
+// keywords:  arrays
+// status:    correct
+//
+
+loadFile("NPendulum.mo");
+getErrorString();
+
+setCommandLineOptions("--maxSizeLinearTearing=0");
+buildModel(NPendulum.pendulum40); getErrorString();
+system("./NPendulum.pendulum40 -ls umfpack");
+res := OpenModelica.Scripting.compareSimulationResults("NPendulum.pendulum40_res.mat",
+  getEnvironmentVar("REFERENCEFILES")+"/linear_system/NPendulum_40.mat",
+  "NPendulum_diff.csv",0.01,0.0001,
+  {"pendel.phi[40]"});
+system("./NPendulum.pendulum40 -ls klu");
+res := OpenModelica.Scripting.compareSimulationResults("NPendulum.pendulum40_res.mat",
+  getEnvironmentVar("REFERENCEFILES")+"/linear_system/NPendulum_40.mat",
+  "NPendulum_diff.csv",0.01,0.0001,
+  {"pendel.phi[40]"});
+
+// Result:
+// true
+// ""
+// true
+// {"NPendulum.pendulum40","NPendulum.pendulum40_init.xml"}
+// "Notification: Automatically loaded package Modelica 3.2.1 due to uses annotation.
+// Notification: Automatically loaded package Complex 3.2.1 due to uses annotation.
+// Notification: Automatically loaded package ModelicaServices 3.2.1 due to uses annotation.
+// "
+// stdout            | info    | The initialization finished successfully without homotopy method.
+// stdout            | info    | The simulation finished successfully.
+// 0
+// {"Files Equal!"}
+// stdout            | info    | The initialization finished successfully without homotopy method.
+// stdout            | info    | The simulation finished successfully.
+// 0
+// {"Files Equal!"}
+// endResult

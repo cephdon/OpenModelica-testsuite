@@ -1,7 +1,7 @@
 // name: mod9.mo
 // keywords:
 // status: correct
-// cflags:   +d=scodeInst
+// cflags:   -d=newInst
 //
 // Class modifications not propagated.
 //
@@ -12,11 +12,13 @@ model A
 end A;
 
 model B
-  extends A(MyReal(start = 2.0));
+  extends A(MyReal(start = y));
+  parameter Real y = 2.0;
 end B;
 
 // Result:
 // class B
-//   Real x(start = 2.0);
+//   Real x(start = y);
+//   parameter Real y = 2.0;
 // end B;
 // endResult

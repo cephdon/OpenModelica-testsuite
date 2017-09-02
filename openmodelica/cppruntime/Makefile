@@ -1,15 +1,28 @@
 TEST = ../../rtest -v
 
 TESTFILES = \
+tearnonlin1.mos \
 WhenStatement1.mos \
+WhenTuple.mos \
 BouncingBall.mos \
-tearnonlin1.mos 
+arraySliceTest.mos \
+clockedAlgloopTest.mos \
+clockedEventTest.mos \
+clockedSolverTest.mos \
+clockedTypesTest.mos \
+clockedTest.mos \
+externalArrayInputTest.mos \
+mathFunctionsTest.mos \
+nameClashTest.mos \
+functionPointerTest.mos \
+recordTupleReturnTest.mos \
+RefArrayDim2.mos \
+solveTest.mos \
+testMatrixIO.mos \
+trapezoidTest.mos
 
 FAILINGTESTFILES= \
-WhenStatement1FMI.mos \
-BouncingBallFMI.mos \
-tearnonlin1FMI.mos
-
+ClockInterval.mos \
 
 # Dependency files that are not .mo .mos or Makefile
 # Add them here or they will be cleaned.
@@ -38,20 +51,29 @@ testTables2.csv \
 testTables2.txt \
 testTables2D.txt \
 hpcom \
-umfpack \
 fmu \
 staticLinking \
+genDebugSymbols \
+hardcodedStartValues \
+outputFormat \
 ReferenceFiles \
-libraries
+outputFormat \
+libraries \
+peer \
+omedit
 
 CLEAN = `ls | grep -w -v -f deps.tmp`
 HPCOM_DIR = hpcom/
-UMFPACK_DIR = umfpack/
+HPCOM_FMI_1_0_DIR = hpcom/fmu/modelExchange/1.0
 FMI_1_0_DIR = fmu/modelExchange/1.0
 FMI_2_0_DIR = fmu/modelExchange/2.0
 STATIC_LINKING_DIR = staticLinking
+DEBUG_SYMBOLS_DIR = genDebugSymbols
+HARDCODED_START_VALUES_DIR = hardcodedStartValues
+OUTPUT_FORMAT_DIR = outputFormat
+OMEDIT_DIR = omedit
 
-.PHONY : test clean getdeps
+.PHONY : test clean getdeps failingtest
 
 test:
 	@echo
@@ -60,10 +82,14 @@ test:
 	@echo OPENMODELICAHOME=" $(OPENMODELICAHOME) "
 	@$(TEST) $(TESTFILES)
 	@$(MAKE) -C $(HPCOM_DIR)
-	@$(MAKE) -C $(UMFPACK_DIR)
 	@$(MAKE) -C $(FMI_1_0_DIR)
 	@$(MAKE) -C $(FMI_2_0_DIR)
+	@$(MAKE) -C $(HPCOM_FMI_1_0_DIR)
 	@$(MAKE) -C $(STATIC_LINKING_DIR)
+	@$(MAKE) -C $(DEBUG_SYMBOLS_DIR)
+	@$(MAKE) -C $(HARDCODED_START_VALUES_DIR)
+	@$(MAKE) -C $(OUTPUT_FORMAT_DIR)
+	@$(MAKE) -C $(OMEDIT_DIR)
 
 
 # Cleans all files that are not listed as dependencies 
@@ -71,10 +97,14 @@ clean :
 	@echo $(DEPENDENCIES) | sed 's/ /\\|/g' > deps.tmp
 	@rm -f $(CLEAN)
 	@$(MAKE) -C $(HPCOM_DIR) clean
-	@$(MAKE) -C $(UMFPACK_DIR) clean
 	@$(MAKE) -C $(FMI_1_0_DIR) clean
 	@$(MAKE) -C $(FMI_2_0_DIR) clean
+	@$(MAKE) -C $(HPCOM_FMI_1_0_DIR) clean
 	@$(MAKE) -C $(STATIC_LINKING_DIR) clean
+	@$(MAKE) -C $(DEBUG_SYMBOLS_DIR) clean
+	@$(MAKE) -C $(HARDCODED_START_VALUES_DIR) clean
+	@$(MAKE) -C $(OUTPUT_FORMAT_DIR) clean
+	@$(MAKE) -C $(OMEDIT_DIR) clean
 
 
 # Run this if you want to list out the files (dependencies).

@@ -33,6 +33,7 @@ Redeclare4.mo \
 Redeclare5.mo \
 Redeclare6.mo \
 Redeclare6.mos \
+RedeclareArrayComponent1.mo \
 RedeclareBaseClass1.mo \
 RedeclareClass1.mo \
 RedeclareClass4.mo \
@@ -41,8 +42,11 @@ RedeclareFunction.mo \
 RedeclareFunction1.mo \
 RedeclareFunctionSameType.mo \
 RedeclareInClassModification.mo \
+RedeclareLocalClass.mo \
 RedeclareModifierInvalid1.mo \
 RedeclareModifierInvalid2.mo \
+RedeclareNoCC1.mo \
+RedeclareRecordComponent1.mo \
 RedeclareVisibility.mo \
 BranchingDynamicPipes.mo \
 TestPackageInheritance.mos \

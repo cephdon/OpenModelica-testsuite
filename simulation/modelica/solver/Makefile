@@ -4,28 +4,60 @@ TESTFILES = \
 bug2231-radau1.mos \
 LotkaVolterraWithInput.mos \
 problem1-dasslsteps.mos \
-problem1-radau1.mos \
-problem1-radau3.mos \
-problem1-radau5.mos \
-problem1-lobatto2.mos \
-problem1-lobatto4.mos \
-problem1-lobatto6.mos \
-problem1-symEuler.mos \
+problem1-impeuler.mos \
+problem1-trapezoid.mos \
+problem1-imprk.mos \
+problem1-irksco.mos \
+problem1-ida.mos \
+problem1-symSolverImp.mos \
+problem1-symSolverExp.mos \
+problem1-symSolverImpSsc.mos \
+problem1-symSolverExpSsc.mos \
 problem2-dasslsteps.mos \
-problem2-radau1.mos \
-problem2-radau3.mos \
-problem2-radau5.mos \
-problem2-lobatto2.mos \
-problem2-lobatto4.mos \
-problem2-lobatto6.mos \
-problem2-symEuler.mos \
-problem3-symEuler.mos \
+problem2-impeuler.mos \
+problem2-trapezoid.mos \
+problem2-imprk.mos \
+problem2-irksco.mos \
+problem2-ida.mos \
+problem2-idaLinearSolver.mos \
+problem2-imprkLS.mos \
+problem2-symSolverImp.mos \
+problem2-symSolverExp.mos \
+problem2-symSolverImpSsc.mos \
+problem2-symSolverExpSsc.mos \
+problem3-symSolverImp.mos \
+problem3-symSolverExp.mos \
+problem3-symSolverImpSsc.mos \
+problem3-symSolverExpSsc.mos \
+problem4-erk_ssc.mos \
+problem4-symSolverImp.mos \
+problem4-symSolverExp.mos \
+problem5-symSolverImp.mos \
+problem5-symSolverExp.mos \
+problem6-irksco.mos \
+problem6-symSolverImp.mos \
+problem6-symSolverExp.mos \
 
-# test that currently fail. Move up when fixed. 
-# Run make testfailing
-FAILINGTESTFILES=  \
-
-
+# run only symSolver tests
+SYMSOLVER = \
+problem1-symSolverImp.mos \
+problem1-symSolverExp.mos \
+problem1-symSolverImpSsc.mos \
+problem1-symSolverExpSsc.mos \
+problem2-symSolverImp.mos \
+problem2-symSolverExp.mos \
+problem2-symSolverImpSsc.mos \
+problem2-symSolverExpSsc.mos \
+problem3-symSolverImp.mos \
+problem3-symSolverExp.mos \
+problem3-symSolverImpSsc.mos \
+problem3-symSolverExpSsc.mos \
+problem4-symSolverImp.mos \
+problem4-symSolverExp.mos \
+problem5-symSolverImp.mos \
+problem5-symSolverExp.mos \
+problem6-symSolverImp.mos \
+problem6-symSolverExp.mos \
 
 # Dependency files that are not .mo .mos or Makefile
 # Add them here or they will be cleaned.
@@ -46,7 +78,7 @@ test:
 	@echo OPENMODELICAHOME=" $(OPENMODELICAHOME) "
 	rm -rf externalInput.csv
 	@$(TEST) $(TESTFILES)
-	
+
 # Cleans all files that are not listed as dependencies 
 clean :
 	@echo $(DEPENDENCIES) | sed 's/ /\\|/g' > deps.tmp
@@ -69,3 +101,10 @@ failingtest :
 	@echo Running failing tests...
 	@echo
 	@$(TEST) $(FAILINGTESTFILES)
+
+symSolver:
+	@echo
+	@echo Running tests...
+	@echo
+	@echo OPENMODELICAHOME=" $(OPENMODELICAHOME) "
+	@$(TEST) $(SYMSOLVER)

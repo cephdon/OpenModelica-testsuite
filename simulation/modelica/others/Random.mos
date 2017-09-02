@@ -10,12 +10,14 @@
 //
 
 
-setCommandLineOptions("+std=3.2"); // So we do not need to mark functions "impure"
+setCommandLineOptions("--std=3.2"); // So we do not need to mark functions "impure"
 loadFile("Random.mo"); getErrorString();
 
+setCommandLineOptions("-d=gen");
 testRandom1({5,6,13});
 testRandom1({6,7,2});
 testRandom1({33,21,17});
+setCommandLineOptions("-d=nogen");
 
 instantiateModel(testRandom2); getErrorString();
 simulate(testRandom2, stopTime=3); getErrorString();
@@ -24,6 +26,7 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // true
 // true
 // ""
+// true
 // See if seed_start is OK
 // seed_start[1] = 5
 // seed_start[2] = 6
@@ -33,16 +36,16 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // seed[2] = 6
 // seed[3] = 13
 // x = 0.1351802310973727
-// x = 0.07698908611783695
-// x = 0.6320634440543992
-// x = 0.1746304784651729
-// x = 0.2261487421133115
-// x = 0.5822825403329424
+// x = 0.0769890861178375
+// x = 0.6320634440543995
+// x = 0.1746304784651731
+// x = 0.2261487421133119
+// x = 0.5822825403329426
 // x = 0.8685325299092261
-// x = 0.3247009996034561
-// x = 0.1539904247592702
-// x = 0.9668480139584232
-// 0.9668480139584232
+// x = 0.3247009996034562
+// x = 0.1539904247592703
+// x = 0.9668480139584235
+// 0.9668480139584235
 // See if seed_start is OK
 // seed_start[1] = 6
 // seed_start[2] = 7
@@ -51,17 +54,17 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // seed[1] = 6
 // seed[2] = 7
 // seed[3] = 2
-// x = 0.08483547196048632
-// x = 0.5353798901434892
-// x = 0.4768262391718505
-// x = 0.7703588380462374
-// x = 0.9086443360920615
-// x = 0.9854621425896027
+// x = 0.08483547196048634
+// x = 0.5353798901434894
+// x = 0.4768262391718506
+// x = 0.7703588380462376
+// x = 0.9086443360920617
+// x = 0.9854621425896031
 // x = 0.4482131888968541
-// x = 0.2495274098011118
-// x = 0.9816385353446079
-// x = 0.4101378849580569
-// 0.4101378849580569
+// x = 0.2495274098011122
+// x = 0.981638535344608
+// x = 0.4101378849580573
+// 0.4101378849580573
 // See if seed_start is OK
 // seed_start[1] = 33
 // seed_start[2] = 21
@@ -70,35 +73,18 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // seed[1] = 33
 // seed[2] = 21
 // seed[3] = 17
-// x = 0.4009159389765675
-// x = 0.5804987598022004
-// x = 0.5620918184705913
-// x = 0.5724159035264322
-// x = 0.8498200264820869
-// x = 0.06581013494972077
-// x = 0.2625044697939488
-// x = 0.7933464385344385
-// x = 0.8767777042924848
-// x = 0.6998297199089916
-// 0.6998297199089916
-// See if seed_start is OK
-// seed_start[1] = 23
-// seed_start[2] = 87
-// seed_start[3] = 187
-// See if seed is set from seed_start
-// seed[1] = 23
-// seed[2] = 87
-// seed[3] = 187
-// x = 0.6720613541740214
-// x = 0.3678597646977232
-// x = 0.6041085613242591
-// x = 0.1667374195729036
-// x = 0.4629589578171096
-// x = 0.9289893342375365
-// x = 0.6531921316126386
-// x = 0.5926293930235833
-// x = 0.5294703487946858
-// x = 0.7684225743864566
+// x = 0.4009159389765676
+// x = 0.5804987598022009
+// x = 0.5620918184705916
+// x = 0.5724159035264323
+// x = 0.849820026482087
+// x = 0.0658101349497211
+// x = 0.2625044697939494
+// x = 0.7933464385344386
+// x = 0.8767777042924849
+// x = 0.699829719908992
+// 0.699829719908992
+// true
 // "function Modelica.Utilities.Streams.print \"Print string to terminal or file\"
 //   input String string = \"\" \"String to be printed\";
 //   input String fileName = \"\" \"File where to print (empty string is the terminal)\";
@@ -119,7 +105,7 @@ simulate(testRandom2, stopTime=3); getErrorString();
 //       seedOut[i] := 1;
 //     end if;
 //   end for;
-//   x := /*Real*/(seedOut[1]) / 30269.0 + /*Real*/(seedOut[2]) / 30307.0 + /*Real*/(seedOut[3]) / 30323.0 - div(/*Real*/(seedOut[1]) / 30269.0 + /*Real*/(seedOut[2]) / 30307.0 + /*Real*/(seedOut[3]) / 30323.0, 1.0);
+//   x := 3.303710066404573e-05 * /*Real*/(seedOut[1]) + 3.299567756623883e-05 * /*Real*/(seedOut[2]) + 3.297826732183491e-05 * /*Real*/(seedOut[3]) - div(3.303710066404573e-05 * /*Real*/(seedOut[1]) + 3.299567756623883e-05 * /*Real*/(seedOut[2]) + 3.297826732183491e-05 * /*Real*/(seedOut[3]), 1.0);
 // end random;
 //
 // function testRandom3
@@ -168,24 +154,6 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // end testRandom2;
 // "
 // ""
-// See if seed_start is OK
-// seed_start[1] = 23
-// seed_start[2] = 87
-// seed_start[3] = 187
-// See if seed is set from seed_start
-// seed[1] = 23
-// seed[2] = 87
-// seed[3] = 187
-// x = 0.6720613541740214
-// x = 0.3678597646977232
-// x = 0.6041085613242591
-// x = 0.1667374195729036
-// x = 0.4629589578171096
-// x = 0.9289893342375365
-// x = 0.6531921316126386
-// x = 0.5926293930235833
-// x = 0.5294703487946858
-// x = 0.7684225743864566
 // record SimulationResult
 //     resultFile = "testRandom2_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 3.0, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'testRandom2', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
@@ -197,34 +165,17 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // seed[1] = 23
 // seed[2] = 87
 // seed[3] = 187
-// x = 0.6720613541740214
-// x = 0.3678597646977232
-// x = 0.6041085613242591
-// x = 0.1667374195729036
-// x = 0.4629589578171096
-// x = 0.9289893342375365
-// x = 0.6531921316126386
-// x = 0.5926293930235833
-// x = 0.5294703487946858
-// x = 0.7684225743864566
-// See if seed_start is OK
-// seed_start[1] = 23
-// seed_start[2] = 87
-// seed_start[3] = 187
-// See if seed is set from seed_start
-// seed[1] = 23
-// seed[2] = 87
-// seed[3] = 187
-// x = 0.6720613541740214
-// x = 0.3678597646977232
-// x = 0.6041085613242591
-// x = 0.1667374195729036
-// x = 0.4629589578171096
-// x = 0.9289893342375365
-// x = 0.6531921316126386
-// x = 0.5926293930235833
-// x = 0.5294703487946858
-// x = 0.7684225743864566
+// x = 0.6720613541740216
+// x = 0.3678597646977235
+// x = 0.6041085613242592
+// x = 0.1667374195729037
+// x = 0.4629589578171097
+// x = 0.9289893342375366
+// x = 0.653192131612639
+// x = 0.5926293930235835
+// x = 0.5294703487946859
+// x = 0.7684225743864568
+// stdout            | info    | The initialization finished successfully without homotopy method.
 // time = 0.0, x = 0.672061
 // time = 0.2, x = 0.367860
 // time = 0.4, x = 0.604109
@@ -241,8 +192,9 @@ simulate(testRandom2, stopTime=3); getErrorString();
 // time = 2.6, x = 0.064589
 // time = 2.8, x = 0.674971
 // time = 3.0, x = 0.180925
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // endResult

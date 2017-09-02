@@ -175,7 +175,8 @@ list(A);                                                                        
 //   final inner discrete Integer x \"comment for x\";
 // protected
 // equation
-//   connect(a, b) annotation(Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
+//   connect(a, b) annotation(
+//     Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
 // end A;"
 // Evaluating: getErrorString()
 // ""
@@ -184,7 +185,7 @@ list(A);                                                                        
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getNthConnection(A, 1)
-// {a,b, ""}
+// {"a","b",""}
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getNthConnectionAnnotation(A, 1)
@@ -196,7 +197,7 @@ list(A);                                                                        
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getClassInformation(A)
-// ("model","this is the class A",false,false,false,"",false,0,0,0,0,{})
+// ("model","this is the class A",false,false,false,"",false,0,0,0,0,{},false,false,"","",false)
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getComponents(A)
@@ -217,7 +218,8 @@ list(A);                                                                        
 //   final stream Real y;
 // protected
 // equation
-//   connect(a, b) annotation(Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
+//   connect(a, b) annotation(
+//     Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
 // end A;"
 // Evaluating: getErrorString()
 // ""
@@ -313,7 +315,8 @@ list(A);                                                                        
 //   final inner discrete Integer x \"comment for x\";
 // protected
 // equation
-//   connect(a, b) annotation(Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
+//   connect(a, b) annotation(
+//     Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
 // end A;"
 // Evaluating: getErrorString()
 // ""
@@ -322,7 +325,7 @@ list(A);                                                                        
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getNthConnection(A, 1)
-// {a,b, ""}
+// {"a","b",""}
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getNthConnectionAnnotation(A, 1)
@@ -334,7 +337,7 @@ list(A);                                                                        
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getClassInformation(A)
-// ("model","this is the class A",false,false,false,"",false,0,0,0,0,{})
+// ("model","this is the class A",false,false,false,"",false,0,0,0,0,{},false,false,"","",false)
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getComponents(A)
@@ -355,7 +358,8 @@ list(A);                                                                        
 //   final stream Real y;
 // protected
 // equation
-//   connect(a, b) annotation(Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
+//   connect(a, b) annotation(
+//     Line(points = {{-22.0, 15.0}, {32.0, 15.0}, {32.0, 16.0}}));
 // end A;"
 // Evaluating: getErrorString()
 // ""

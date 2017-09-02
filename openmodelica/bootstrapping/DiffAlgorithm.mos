@@ -1,11 +1,12 @@
 // status: correct
 
-setCommandLineOptions("+g=MetaModelica +n=1 +d=noevalfunc");
+setCommandLineOptions("-g=MetaModelica -n=1 -d=noevalfunc,gen");
 echo(false);
 prefixPath := if ""==getEnvironmentVar("OMCOMPILERSOURCES") then "../../../OMCompiler/Compiler/" else getEnvironmentVar("OMCOMPILERSOURCES") + "/";
 echo(true);
 loadFiles({
   prefixPath + "Util/DiffAlgorithm.mo",
+  prefixPath + "Util/List.mo",
   prefixPath + "Util/Print.mo"
 });
 getErrorString();

@@ -17,6 +17,7 @@ BuiltinString.mos \
 CheckPatternScope.mo \
 ComplicatedInteractive.mos \
 Continue.mo \
+cref.mos \
 Equality.mos \
 EqPatternm.mos \
 ErrorInteractiveCallFunctionPtr.mos \
@@ -36,6 +37,8 @@ ForIterList.mos \
 ForIterArray.mos \
 FunctionPartialApplicationAsGeneralExp.mos \
 FunctionReturningArray.mos \
+InvalidWild1.mos \
+IsPresent.mos \
 List1.mos \
 List2.mos \
 List3.mos \
@@ -69,6 +72,7 @@ MatchCaseInteractive3.mos \
 MatchDotNotation.mos \
 MatchElse1.mos \
 MatchIfEquation1.mos \
+MatchNoRetCall.mos \
 MatchShadowing.mo \
 OptimizeContinue.mo \
 OptimizeMatchToIfExp.mo \
@@ -95,12 +99,17 @@ Polymorphic.mos \
 Polymorphic2.mos \
 PolymorphicReduction.mos \
 Recursive.mos \
+ReturnInTryBlock.mos \
+ScalarArrayOperations.mos \
 Shadowing1.mos \
 Shadowing2.mos \
 Simplify1.mos \
+StringBoxed.mos \
 SwitchString.mos \
 TailRecursion.mo \
 TailRecursionNoretcall.mos \
+Ticket2974.mos \
+Ticket3005.mos \
 ThreadedReduction.mos \
 Try.mos \
 TupleInteractive.mos \

@@ -9,6 +9,7 @@ Modelica.Electrical.Spice3.Examples.CoupledInductors.mos \
 Modelica.Electrical.Analog.Examples.ShowSaturatingInductor.mos \
 Modelica.Mechanics.MultiBody.Examples.Elementary.DoublePendulum.mos \
 Modelica.Mechanics.MultiBody.Examples.Elementary.RollingWheelSetDriving.mos \
+Modelica.Mechanics.MultiBody.Examples.Elementary.SpringWithMass.mos \
 Modelica.Mechanics.Rotational.Examples.Backlash.mos \
 Modelica.Mechanics.Rotational.Examples.RollingWheel.mos \
 Modelica.Mechanics.Translational.Examples.Accelerate.mos \
@@ -21,6 +22,11 @@ Modelica.StateGraph.Examples.FirstExample.mos \
 Modelica.Thermal.HeatTransfer.Examples.ControlledTemperature.mos \
 Modelica.Thermal.HeatTransfer.Examples.TwoMasses.mos \
 Modelica.Electrical.Digital.Examples.Counter.mos \
+Modelica.Utilities.Examples.readRealParameterModel.mos \
+
+
+# tested features:
+# readRealParameterModel: string handling, variable name string
 
 # Run make failingtest
 FAILINGTESTFILES=\
@@ -47,7 +53,7 @@ test:
 	@echo
 	@echo OPENMODELICAHOME=" $(OPENMODELICAHOME) "
 	@$(TEST) $(TESTFILES)
-	
+
 # Cleans all files that are not listed as dependencies 
 clean :
 	@echo $(DEPENDENCIES) | sed 's/ /\\|/g' > deps.tmp
@@ -64,7 +70,7 @@ getdeps:
 	@echo $(CLEAN) | sed -r 's/deps.txt|deps.tmp//g' | sed 's/ / \\\n/g' > deps.txt	
 	@echo Dependency list saved in deps.txt.
 	@echo Copy the list from deps.txt and add it to the Makefile @DEPENDENCIES
-	
+
 failingtest:
 	@echo
 	@echo Running failing tests...

@@ -4,9 +4,13 @@ FAILINGTESTFILES = \
 Inverter2.mos
 
 TESTFILES = \
+partialConstArray.mos \
+functionEvaluation.mos \
 functionTest4.mos \
 functionTest5.mos \
 functionTest7.mos \
+functionTest8.mos \
+functionTest9.mos \
 simplifyIf1.mos \
 simplifyIf2.mos \
 ticket2535.mos \

@@ -1,7 +1,8 @@
 within ;
 package cranes
   model crane
-    inner Modelica.Mechanics.MultiBody.World world
+
+    inner Modelica.Mechanics.MultiBody.World world(enableAnimation=false)
       annotation (Placement(transformation(extent={{-80,40},{-60,60}})));
     Modelica.Mechanics.MultiBody.Parts.BodyShape bodyShape(m=1, r={0,0,0},
       r_CM={0,0,0})
@@ -169,6 +170,6 @@ package cranes
     annotation (Diagram(coordinateSystem(preserveAspectRatio=false, extent={{
               -100,-100},{100,100}}), graphics));
   end crane_input;
-  annotation (uses(Modelica(version="3.2.1"), Modelica_DeviceDrivers(version=
+  annotation (uses(Modelica(version="3.2.2"), Modelica_DeviceDrivers(version=
             "1.2")));
 end cranes;

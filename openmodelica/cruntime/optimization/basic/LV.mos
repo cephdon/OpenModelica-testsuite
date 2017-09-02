@@ -190,7 +190,8 @@ getErrorString();
 // record SimulationResult
 //     resultFile = "optLotkaVolterra1_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 70, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'optLotkaVolterra1', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:foxes(start = 10, nominal = 11, min = -Inf, max = +Inf, init = 10)
@@ -207,16 +208,19 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // record SimulationResult
 //     resultFile = "optLotkaVolterra2_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 70, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'optLotkaVolterra2', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:foxes(start = 10, nominal = 11, min = -Inf, max = +Inf, init = 10)
@@ -233,16 +237,19 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // record SimulationResult
 //     resultFile = "optLotkaVolterra3_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 70, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'optLotkaVolterra3', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:foxes(start = 10, nominal = 11, min = -Inf, max = +Inf, init = 10)
@@ -259,16 +266,19 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // record SimulationResult
 //     resultFile = "optLotkaVolterra4_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 70, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'optLotkaVolterra4', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:foxes(start = 10, nominal = 13, min = 4, max = 13, init = 10)
@@ -285,16 +295,19 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // record SimulationResult
 //     resultFile = "optLotkaVolterra5_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 70, tolerance = 1e-08, method = 'optimization', fileNamePrefix = 'optLotkaVolterra5', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:foxes(start = 10, nominal = 13, min = 4, max = 13, init = 10)
@@ -311,10 +324,12 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // {"Files Equal!"}
-// ""
+// "Warning: 'compareSimulationResults' is deprecated. It is recommended to use 'diffSimulationResults' instead.
+// "
 // endResult

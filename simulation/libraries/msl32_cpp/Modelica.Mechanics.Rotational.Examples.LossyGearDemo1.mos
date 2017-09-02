@@ -19,7 +19,7 @@ compareVars :=
    "der(Inertia1.w)"
 };
 
-runScript("common.mos");getErrorString();
+simulationRuntime := OpenModelicaModelTesting.SimulationRuntime.Cpp;
 
 runScript(modelTesting);getErrorString();
 
@@ -30,16 +30,11 @@ runScript(modelTesting);getErrorString();
 // OpenModelicaModelTesting.Kind.VerifiedSimulation
 // Modelica.Mechanics.Rotational.Examples.LossyGearDemo1
 // {"gear.flange_a.phi","Inertia1.w","Inertia2.w","Inertia2.phi","der(Inertia1.w)"}
-// "OpenModelicaModelTesting.SimulationRuntime.Cpp
-// \"ReferenceFiles/Modelica.Mechanics.Rotational.Examples.LossyGearDemo1.mat\"
-// "
-// ""
+// OpenModelicaModelTesting.SimulationRuntime.Cpp
 // Simulation options: startTime = 0.0, stopTime = 0.5, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Modelica.Mechanics.Rotational.Examples.LossyGearDemo1', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''
 // Result file: Modelica.Mechanics.Rotational.Examples.LossyGearDemo1_res.mat
 // Files Equal!
-// Warning: There are iteration variables with default zero start attribute. Use +d=initialization for more information.
-//
-// Error: Could not read variable der(Inertia1.w) in file Modelica.Mechanics.Rotational.Examples.LossyGearDemo1_res.mat.
+// Warning: There are iteration variables with default zero start attribute. For more information set +d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("+d=initialization").
 //
 // "true
 // "

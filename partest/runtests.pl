@@ -53,13 +53,16 @@ my $file;
 my $slowest:shared = 0;
 my $slowest_name:shared = "";
 my $gitlibs = 0;
+my $parmodexp = 0;
 
 # Default is two threads.
 my $thread_count = 2;
 my $check_proc_cpu = 1;
 my $withxml = 0;
 my $withxmlcmd = 0;
+my $withtxt = 0;
 my $have_dwdiff = "";
+my $rebase_test = "";
 
 {
   eval { require File::Which; 1; };
@@ -90,9 +93,12 @@ for(@ARGV){
     print("  -nocolour     Don't use colours in output.\n");
     print("  -counttests   Don't run the test; only count them.\n");
     print("  -with-xml     Output XML log.\n");
+    print("  -with-txt     Output TXT log.\n");
     print("  -failing      Run failing tests instead of working.\n");
     print("  -veryfew      Run only a very small number of tests to see if runtests.pl is working.\n");
     print("  -gitlibs      If you have installed omc using GITLIBRARIES=Yes, you can test some of those libraries.\n");
+    print("  -parmodexp    Run the OpenCL ParModelica tests.\n");
+	print("  -b            Rebase tests in parallel. Use in conjuction with -file=/path/to/file.\n");
     exit 1;
   }
   if(/^-f$/) {
@@ -127,6 +133,9 @@ for(@ARGV){
     $withxml = 1;
     $withxmlcmd = '-with-xml';
   }
+  elsif(/^-with-txt$/) {
+    $withtxt = 1;
+  }
   elsif(/^-failing$/) {
     $run_failing = 1;
   }
@@ -138,6 +147,12 @@ for(@ARGV){
   }
   elsif(/^-gitlibs$/) {
     $gitlibs = 1;
+  }
+  elsif(/^-parmodexp$/) {
+    $parmodexp = 1;
+  }
+  elsif(/^-b$/) {
+    $rebase_test = "-b";
   }
   else {
     print("Unknown flag " . $_ . "!\n");
@@ -247,7 +262,7 @@ sub run_tests {
     (my $test_dir, my $test) = $test_full =~ /(.*)\/([^\/]*)$/;
 
     my $t0 = [gettimeofday];
-    my $cmd = "$testscript $test_full $have_dwdiff $nocolour $withxmlcmd $with_omc";
+    my $cmd = "$testscript $test_full $have_dwdiff $nocolour $withxmlcmd $with_omc $rebase_test";
     my $x = system("$cmd") >> 8;
     my $elapsed = tv_interval ( $t0, [gettimeofday]);
 
@@ -278,6 +293,8 @@ if (!defined($file)) {
 
   if ($cppruntime == 1) {
     read_makefile("./simulation/libraries/msl32_cpp", "TESTFILES");
+  } elsif ($parmodexp == 1) {
+    read_makefile("./parmodelica/explicit", "TESTFILES");
   } elsif($veryfew == 1) {
     read_makefile("./flattening/modelica/modification", "TESTFILES");
   } elsif($run_failing == 0) {
@@ -351,11 +368,32 @@ foreach my $thr (threads->list()) {
 print color 'reset';
 print "\n";
 
+chomp(my $ext = `(git symbolic-ref --short HEAD 2>/dev/null) || (echo 'log')`);
+if($withtxt) {
+  unlink("$testsuite_root/failed.".$ext);
+}
+
 if(@failed_tests) {
   print "\nFailed tests:\n";
   my @sorted = sort @failed_tests;
   foreach my $failed_test (@sorted) {
     print "\t" . $failed_test . "\n";
+  }
+
+  if($withtxt) {
+    open my $TXTOUT, '>', "$testsuite_root/failed.".$ext or die "Couldn't open failed.".$ext.": $!";
+    binmode $TXTOUT, ":encoding(UTF-8)";
+
+    print $TXTOUT localtime(time)."\n\n";
+
+    foreach my $failed_test (@sorted) {
+      print $TXTOUT $failed_test . "\n";
+    }
+
+    print $TXTOUT "\n$tests_failed of $test_count failed\n";
+    close $TXTOUT;
+
+    print "\n[Statistics have been stored in failed.".$ext."]\n";
   }
 }
 

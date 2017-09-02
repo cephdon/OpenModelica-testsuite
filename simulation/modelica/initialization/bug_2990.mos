@@ -34,8 +34,9 @@ simulate(initializationTests.bug_2990, simflags="-lv=LOG_INIT -iim=none"); getEr
 // LOG_INIT          | info    | updating max-values
 // |                 | |       | | x(max=6.25)
 // LOG_INIT          | info    | updating nominal-values
-// LOG_INIT          | info    | updating start-values
+// LOG_INIT          | info    | updating primary start-values
 // LOG_INIT          | info    | initialization method: symbolic        [solves the initialization problem symbolically - default]
+// stdout            | info    | The initialization finished successfully without homotopy method.
 // LOG_INIT          | info    | parameter values
 // |                 | |       | | real parameters
 // |                 | |       | | | [1] parameter Real L(start=2.5, fixed=true) = 2.5
@@ -48,9 +49,10 @@ simulate(initializationTests.bug_2990, simflags="-lv=LOG_INIT -iim=none"); getEr
 // |                 | |       | | | [3] Real der(x) = 0 (pre: 0)
 // |                 | |       | | | [4] Real der(y) = -0.24 (pre: 0)
 // LOG_INIT          | info    | ### END INITIALIZATION ###
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // record SimulationResult
 //     resultFile = "initializationTests.bug_2990_res.mat",
@@ -61,7 +63,7 @@ simulate(initializationTests.bug_2990, simflags="-lv=LOG_INIT -iim=none"); getEr
 // LOG_INIT          | info    | updating max-values
 // |                 | |       | | x(max=6.25)
 // LOG_INIT          | info    | updating nominal-values
-// LOG_INIT          | info    | updating start-values
+// LOG_INIT          | info    | updating primary start-values
 // LOG_INIT          | info    | initialization method: none            [sets all variables to their start values and skips the initialization process]
 // LOG_INIT          | info    | parameter values
 // |                 | |       | | real parameters
@@ -75,8 +77,9 @@ simulate(initializationTests.bug_2990, simflags="-lv=LOG_INIT -iim=none"); getEr
 // |                 | |       | | | [3] Real der(x) = 0 (pre: 0)
 // |                 | |       | | | [4] Real der(y) = 0 (pre: 0)
 // LOG_INIT          | info    | ### END INITIALIZATION ###
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
-// "Warning: The initial conditions are not fully specified. Use +d=initialization for more information.
+// "Warning: The initial conditions are not fully specified. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->OMCFlags, in OMNotebook call setCommandLineOptions("-d=initialization").
 // "
 // endResult

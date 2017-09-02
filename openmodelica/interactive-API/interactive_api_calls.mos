@@ -1,7 +1,7 @@
 // name: API-Interactive Calls
 // keywords: Graphical API, component attributes
 // status: correct
-// 
+//
 //  Subset of the Graphical API for setting component attributes
 //
 
@@ -32,8 +32,8 @@ isShortDefinition(vector3D); getErrorString();
 isShortDefinition(C); getErrorString();
 isEnumeration(C); getErrorString();
 getEnumerationLiterals(C); getErrorString();
-isEnumeration(size); getErrorString();
-getEnumerationLiterals(size); getErrorString();
+isEnumeration(sizeE); getErrorString();
+getEnumerationLiterals(sizeE); getErrorString();
 isReplaceable(ReplaceableClass, "M1"); getErrorString();
 isReplaceable(RealSignal, "SignalType"); getErrorString();
 isProtectedClass(RealSignal, "SignalType"); getErrorString();
@@ -45,6 +45,7 @@ getDerivedClassModifierValue(Resistance, quantity);
 getClassInformation(vector3D); getErrorString();
 getInheritanceCount(vector3D); getErrorString();
 getNthInheritedClass(vector3D, 1); getErrorString();
+getInheritedClasses(vector3D);
 getNthComponentCondition(M, 1); getErrorString();
 getNthComponentCondition(M, 2); getErrorString();
 getNthComponentCondition(M, 3); getErrorString();
@@ -53,6 +54,7 @@ getExtendsModifierValue(vector3D, Real, start); getErrorString();
 getExtendsModifierValue(vector3D, Real, nominal); getErrorString();
 getClassComment(M); getErrorString();
 getComponentComment(M, r); getErrorString();
+getClassInformation(state1); getErrorString();
 
 loadModel(Modelica,{"3.1"}); getErrorString();
 getAnnotationCount(Modelica.Electrical.Analog.Basic.Resistor); getErrorString();
@@ -67,6 +69,7 @@ getInitialEquationCount(Modelica.Mechanics.MultiBody.Parts.Body); getErrorString
 getNthInitialEquation(Modelica.Mechanics.MultiBody.Parts.Body, 1); getErrorString();
 getEquationCount(Modelica.Mechanics.MultiBody.Parts.Body); getErrorString();
 getNthEquation(Modelica.Mechanics.MultiBody.Parts.Body, 1); getErrorString();
+getTransitions(SimpleSMwithAnnotations); getErrorString();
 
 getShortDefinitionBaseClassInformation(RealInput); getErrorString();
 getShortDefinitionBaseClassInformation(RealInput3); getErrorString();
@@ -82,7 +85,7 @@ setComponentModifierValue(TestPack.MyModel, r1, $Code(=2)); getErrorString();
 list(TestPack.MyModel); getErrorString();
 getNthComponentModification(TestPack.MyModel, 1); getErrorString();
 setComponentModifierValue(TestPack.MyModel, r1.start, $Code(=2));  getErrorString();
-list(TestPack.MyModel); getErrorString(); 
+list(TestPack.MyModel); getErrorString();
 setComponentModifierValue(TestPack.MyModel, r1, $Code(=Resistor(R=2)));  getErrorString();
 list(TestPack.MyModel); getErrorString();
 getNthComponentModification(TestPack.MyModel, 1); getErrorString();
@@ -104,7 +107,8 @@ list(TestPack.MyModel); getErrorString();
 // test codeToString($Code)
 codeToString($Code(=1+2)); getErrorString();
 
-// test MSL 3.2 Code issues [from Chris Paredis and Axel Reichwein at Georgia Institute of Technology] 
+// test MSL 3.2 Code issues [from Chris Paredis and Axel Reichwein at Georgia Institute of Technology]
+deleteClass(ModelicaServices);
 loadModel(Modelica, {"3.2.1"}); getErrorString();
 getClassRestriction(Modelica.UsersGuide.Conventions.Documentation.Format.Code); getErrorString();
 getClassInformation(Modelica.UsersGuide.Conventions.Documentation.Format.Code); getErrorString();
@@ -116,7 +120,7 @@ getMessagesStringInternal();
 
 clear();
 // adrpo: test unique messages
-loadModel(Modelica);
+loadModel(Modelica, {"3.2.1"});
 getMessagesStringInternal(); // unique
 loadModel(ThermoSysPro);
 getMessagesStringInternal(); // unique
@@ -225,11 +229,11 @@ getMessagesStringInternal(unique = false); // not unique
 // {}
 // Evaluating: getErrorString()
 // ""
-// Evaluating: isEnumeration(size)
+// Evaluating: isEnumeration(sizeE)
 // true
 // Evaluating: getErrorString()
 // ""
-// Evaluating: getEnumerationLiterals(size)
+// Evaluating: getEnumerationLiterals(sizeE)
 // {"Small","Medium","Large"}
 // Evaluating: getErrorString()
 // ""
@@ -256,11 +260,11 @@ getMessagesStringInternal(unique = false); // not unique
 // Evaluating: getDerivedClassModifierNames(Resistance)
 // {"quantity","unit"}
 // Evaluating: getDerivedClassModifierValue(Resistance, unit)
-// " = \"Ohm\""
+// "\"Ohm\""
 // Evaluating: getDerivedClassModifierValue(Resistance, quantity)
-// " = \"Resistance\""
+// "\"Resistance\""
 // Evaluating: getClassInformation(vector3D)
-// ("type","",false,false,false,"openmodelica/interactive-API/interactive_api_calls.mo",false,4,1,4,67,{"3"})
+// ("type","",false,false,false,"openmodelica/interactive-API/interactive_api_calls.mo",false,4,1,4,67,{"3"},false,false,"","",false)
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getInheritanceCount(vector3D)
@@ -271,6 +275,8 @@ getMessagesStringInternal(unique = false); // not unique
 // Real
 // Evaluating: getErrorString()
 // ""
+// Evaluating: getInheritedClasses(vector3D)
+// {Real}
 // Evaluating: getNthComponentCondition(M, 1)
 // ""
 // Evaluating: getErrorString()
@@ -288,11 +294,11 @@ getMessagesStringInternal(unique = false); // not unique
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getExtendsModifierValue(vector3D, Real, start)
-//  = 5
+// 5
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getExtendsModifierValue(vector3D, Real, nominal)
-//  = {1, 2, 3, 4, 5}
+// {1, 2, 3, 4, 5}
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getClassComment(M)
@@ -301,6 +307,10 @@ getMessagesStringInternal(unique = false); // not unique
 // ""
 // Evaluating: getComponentComment(M, r)
 // "A component comment"
+// Evaluating: getErrorString()
+// ""
+// Evaluating: getClassInformation(state1)
+// ("model","",false,false,false,"openmodelica/interactive-API/interactive_api_calls.mo",false,44,1,46,11,{},false,false,"","",true)
 // Evaluating: getErrorString()
 // ""
 // Evaluating: loadModel(Modelica, {"3.1"})
@@ -312,14 +322,15 @@ getMessagesStringInternal(unique = false); // not unique
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getNthAnnotationString(Modelica.Electrical.Analog.Basic.Resistor, 1)
-// "annotation(Documentation(info = \"<HTML>
+// "annotation(
+//   Documentation(info = \"<HTML>
 // <P>
 // The linear resistor connects the branch voltage <i>v</i> with the
 // branch current <i>i</i> by <i>i*R = v</i>.
 // The Resistance <i>R</i> is allowed to be positive, zero, or negative.
 // </P>
 // </HTML>
-// \", revisions = \"<html>
+//   \", revisions = \"<html>
 // <ul>
 // <li><i> August 07, 2009   </i>
 //        by Anton Haumer<br> temperature dependency of resistance added<br>
@@ -331,7 +342,9 @@ getMessagesStringInternal(unique = false); // not unique
 //        by Christoph Clauss<br> initially implemented<br>
 //        </li>
 // </ul>
-// </html>\"), Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}, grid = {2, 2}), graphics = {Rectangle(extent = {{-70, 30}, {70, -30}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-70, 0}}, color = {0, 0, 255}), Line(points = {{70, 0}, {90, 0}}, color = {0, 0, 255}), Text(extent = {{-144, -40}, {142, -72}}, lineColor = {0, 0, 0}, textString = \"R=%R\"), Line(visible = useHeatPort, points = {{0, -100}, {0, -30}}, color = {127, 0, 0}, smooth = Smooth.None, pattern = LinePattern.Dot), Text(extent = {{-152, 87}, {148, 47}}, textString = \"%name\", lineColor = {0, 0, 255})}), Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}, grid = {2, 2}), graphics = {Rectangle(extent = {{-70, 30}, {70, -30}}, lineColor = {0, 0, 255}), Line(points = {{-96, 0}, {-70, 0}}, color = {0, 0, 255}), Line(points = {{70, 0}, {96, 0}}, color = {0, 0, 255})}));"
+// </html>\"),
+//   Icon(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}, grid = {2, 2}), graphics = {Rectangle(extent = {{-70, 30}, {70, -30}}, lineColor = {0, 0, 255}, fillColor = {255, 255, 255}, fillPattern = FillPattern.Solid), Line(points = {{-90, 0}, {-70, 0}}, color = {0, 0, 255}), Line(points = {{70, 0}, {90, 0}}, color = {0, 0, 255}), Text(extent = {{-144, -40}, {142, -72}}, lineColor = {0, 0, 0}, textString = \"R=%R\"), Line(visible = useHeatPort, points = {{0, -100}, {0, -30}}, color = {127, 0, 0}, smooth = Smooth.None, pattern = LinePattern.Dot), Text(extent = {{-152, 87}, {148, 47}}, textString = \"%name\", lineColor = {0, 0, 255})}),
+//   Diagram(coordinateSystem(preserveAspectRatio = true, extent = {{-100, -100}, {100, 100}}, grid = {2, 2}), graphics = {Rectangle(extent = {{-70, 30}, {70, -30}}, lineColor = {0, 0, 255}), Line(points = {{-96, 0}, {-70, 0}}, color = {0, 0, 255}), Line(points = {{70, 0}, {96, 0}}, color = {0, 0, 255})}));"
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getImportCount(Modelica.Mechanics.Rotational)
@@ -373,15 +386,15 @@ getMessagesStringInternal(unique = false); // not unique
 // ""
 // Evaluating: getNthInitialEquation(Modelica.Mechanics.MultiBody.Parts.Body, 1)
 // "if angles_fixed then
-//   // Initialize positional variables
+// // Initialize positional variables
 //   if not Connections.isRoot(frame_a.R) then
-//     // frame_a.R is computed somewhere else
+// // frame_a.R is computed somewhere else
 //     zeros(3) = Frames.Orientation.equalityConstraint(frame_a.R, R_start);
 //   elseif useQuaternions then
-//     // frame_a.R is computed from quaternions Q
+// // frame_a.R is computed from quaternions Q
 //     zeros(3) = Frames.Quaternions.Orientation.equalityConstraint(Q, Q_start);
 //   else
-//     // frame_a.R is computed from the 3 angles 'phi'
+// // frame_a.R is computed from the 3 angles 'phi'
 //     phi = phi_start;
 //   end if;
 // end if;"
@@ -399,26 +412,26 @@ getMessagesStringInternal(unique = false); // not unique
 // end if;
 // r_0 = frame_a.r_0;
 // if not Connections.isRoot(frame_a.R) then
-//   // Body does not have states
-//   // Dummies
+// // Body does not have states
+// // Dummies
 //   Q = {0, 0, 0, 1};
 //   phi = zeros(3);
 //   phi_d = zeros(3);
 //   phi_dd = zeros(3);
 // elseif useQuaternions then
-//   // Use Quaternions as states (with dynamic state selection)
+// // Use Quaternions as states (with dynamic state selection)
 //   frame_a.R = Frames.from_Q(Q, Frames.Quaternions.angularVelocity2(Q, der(Q)));
 //   {0} = Frames.Quaternions.orientationConstraint(Q);
-//   // Dummies
+// // Dummies
 //   phi = zeros(3);
 //   phi_d = zeros(3);
 //   phi_dd = zeros(3);
 // else
-//   // Use Cardan angles as states
+// // Use Cardan angles as states
 //   phi_d = der(phi);
 //   phi_dd = der(phi_d);
 //   frame_a.R = Frames.axesRotations(sequence_angleStates, phi, phi_d);
-//   // Dummies
+// // Dummies
 //   Q = {0, 0, 0, 1};
 // end if;
 // // gravity acceleration at center of mass resolved in world frame
@@ -439,6 +452,10 @@ getMessagesStringInternal(unique = false); // not unique
 //   */
 // frame_a.f = m * (Frames.resolve2(frame_a.R, a_0 - g_0) + cross(z_a, r_CM) + cross(w_a, cross(w_a, r_CM)));
 // frame_a.t = I * z_a + cross(w_a, I * w_a) + cross(r_CM, frame_a.f);"
+// Evaluating: getErrorString()
+// ""
+// Evaluating: getTransitions(SimpleSMwithAnnotations)
+// {{"state1","state2","i > 10","false","true","false","1","Line(true, {0.0, 0.0}, 0, {{-24, 58}, {-16, 50}, {-24, 11}}, {175, 175, 175}, LinePattern.Solid, 0.25, {Arrow.None, Arrow.None}, 3, Smooth.Bezier), Text(true, {0.0, 0.0}, 0, {95, 95, 95}, {0, 0, 0}, LinePattern.Solid, FillPattern.None, 0.25, {{12, -2}, {12, -8}}, \"%condition\", 10, {TextStyle.Bold}, TextAlignment.Left)"},{"state2","state1","i < 1","false","true","false","1","Line(true, {0.0, 0.0}, 0, {{-66, 11}, {-76, 42}, {-64, 58}}, {175, 175, 175}, LinePattern.Solid, 0.25, {Arrow.None, Arrow.None}, 3, Smooth.Bezier), Text(true, {0.0, 0.0}, 0, {95, 95, 95}, {0, 0, 0}, LinePattern.Solid, FillPattern.None, 0.25, {{-6, 4}, {-6, 10}}, \"%condition\", 10, {TextStyle.Bold}, TextAlignment.Right)"}}
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getShortDefinitionBaseClassInformation(RealInput)
@@ -533,15 +550,15 @@ getMessagesStringInternal(unique = false); // not unique
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getComponentModifierValue(TestPack.MyModel, r1)
-// Resistor(R = 2)
+// "Resistor(R = 2)"
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getComponentModifierValue(TestPack.MyModel, r1.start)
-//  = 2
+// "2"
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getComponentModifierValue(TestPack.MyModel, r1.min)
-//  = 10
+// "10"
 // Evaluating: getErrorString()
 // ""
 // Evaluating: list(TestPack.MyModel)
@@ -588,24 +605,25 @@ getMessagesStringInternal(unique = false); // not unique
 // " = 1 + 2"
 // Evaluating: getErrorString()
 // ""
+// Evaluating: deleteClass(ModelicaServices)
+// true
 // Evaluating: loadModel(Modelica, {"3.2.1"})
 // true
 // Evaluating: getErrorString()
-// "Notification: Modelica language version set to 3.2 due to loading of MSL 3.2.1.
-// Warning: Requested package ModelicaServices of version 3.2.1, but this package was already loaded with version 1.0. You might experience problems if these versions are incompatible.
-// "
+// ""
 // Evaluating: getClassRestriction(Modelica.UsersGuide.Conventions.Documentation.Format.Code)
 // "class"
 // Evaluating: getErrorString()
 // ""
 // Evaluating: getClassInformation(Modelica.UsersGuide.Conventions.Documentation.Format.Code)
-// ("class","Code",false,false,false,"Modelica 3.2.1/package.mo",false,572,9,625,17,{})
+// ("class","Code",false,false,false,"Modelica 3.2.1/package.mo",false,572,9,625,17,{},false,false,"","",false)
 // Evaluating: getErrorString()
 // ""
 // Evaluating: list(Modelica.UsersGuide.Conventions.Documentation.Format.Code)
 // "class Code \"Code\"
 //   extends Modelica.Icons.Information;
-//   annotation(Documentation(info = \"<html>
+//   annotation(
+//     Documentation(info = \"<html>
 // <p>
 // <a href=\\\"modelica://Modelica.UsersGuide.Conventions.ModelicaCode\\\">Modelica code</a> conventions of class and instance names,
 // parameters and variables are specified separately. In this section it is summarized how to refer to
@@ -690,29 +708,14 @@ getMessagesStringInternal(unique = false); // not unique
 // end OpenModelica.Scripting.ErrorMessage;}
 // Evaluating: clear()
 // true
-// Evaluating: loadModel(Modelica)
+// Evaluating: loadModel(Modelica, {"3.2.1"})
 // true
 // Evaluating: getMessagesStringInternal()
 // {}
 // Evaluating: loadModel(ThermoSysPro)
 // true
 // Evaluating: getMessagesStringInternal()
-// {record OpenModelica.Scripting.ErrorMessage
-//     info = record OpenModelica.Scripting.SourceInfo
-//     filename = "ThermoSysPro 3.1/package.mo",
-//     readonly = false,
-//     lineStart = 132,
-//     columnStart = 31,
-//     lineEnd = 134,
-//     columnEnd = 169
-// end OpenModelica.Scripting.SourceInfo;,
-//     message = "ThermoSysPro is not yet fully operational with OpenModelica.
-// The authors suggest using Dymola for full benefit of the library, in particular if you are experiencing difficulties.
-// The current operational status with OpenModelica of the included examples can be found at https://test.openmodelica.org/libraries/ThermoSysPro/BuildModelRecursive.html",
-//     kind = .OpenModelica.Scripting.ErrorKind.scripting,
-//     level = .OpenModelica.Scripting.ErrorLevel.notification,
-//     id = 6002
-// end OpenModelica.Scripting.ErrorMessage;}
+// {}
 // Evaluating: translateModel(ThermoSysPro.Examples.SimpleExamples.TestCentrifugalPumpWaterSolution)
 // true
 // Evaluating: getMessagesStringInternal()

@@ -1,7 +1,7 @@
 // name: redeclare7.mo
 // keywords:
 // status: correct
-// cflags:   +d=scodeInst
+// cflags:   -d=newInst
 //
 // FAILREASON: ??
 //
@@ -26,6 +26,6 @@ end D;
 
 // Result:
 // class D
-//   Real b.z = 2.0;
+//   Real b.z = b.P.x;
 // end D;
 // endResult

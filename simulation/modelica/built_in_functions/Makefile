@@ -4,6 +4,7 @@ TESTFILES = \
 BuiltinMath.mos \
 Compare.mos \
 Delay.mos \
+Delta.mos \
 dertest.mos  \
 DummyDerMatching.mos  \
 Epidemics1.mos \
@@ -12,6 +13,7 @@ Identity.mos \
 LotkaVolterra.mos \
 MeasureTime.mos \
 SemiLinear.mos \
+SemiLinearTest2.mos \
 Sign.mos \
 Time.mos \
 TwoRateSampler.mos 

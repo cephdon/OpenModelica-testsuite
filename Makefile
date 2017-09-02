@@ -22,8 +22,10 @@ cppruntime.log \
 cppruntimeHpcom.log \
 cppruntimeFMU1.log \
 cppruntimeFMU2.log \
-cppruntimeUmfpack.log \
 cppruntimeStaticLinking.log \
+cppruntimeGenDebugSymbols.log \
+cppruntimeHardcodedStartValues.log \
+cppruntimeOMEdit.log \
 taskGraph.log \
 debugDumps.log \
 dumpCruntime.log \
@@ -33,7 +35,9 @@ resolveLoops.log \
 evalConstFuncs.log \
 flatteningBuildings.log \
 buildings.log \
-modelica3d.log
+requirements.log \
+scalable.log \
+device.log
 
 SIMULATIONLOGS = \
 linearization.log \
@@ -50,6 +54,7 @@ simulationenums.log \
 simulationequations.log \
 simulationevents.log \
 simulationsynchronous.log \
+simulationstatemachines.log \
 simulationexternal-functions.log \
 simulationindexreduction.log \
 simulationinheritances.log \
@@ -80,8 +85,10 @@ ThermoPower.log \
 MathematicalAspects_simulation.log \
 PNlib_simulation.log \
 parallel.log \
+parameters.log \
 simoptions.log \
 annex60.log \
+frontEndUnitCheck.log \
 gitlibraries.log
 
 # Sorted by time it takes to run the tests...
@@ -98,6 +105,7 @@ simulationenums.log \
 simulationequations.log \
 simulationevents.log \
 simulationsynchronous.log \
+simulationstatemachines.log \
 simulationexternal-functions.log \
 simulationindexreduction.log \
 simulationinheritances.log \
@@ -304,6 +312,9 @@ simulationevents.log: omc-diff
 simulationsynchronous.log: omc-diff
 	$(MAKE) -C simulation/modelica/synchronous -f Makefile test > $@
 	@echo $@ done
+simulationstatemachines.log: omc-diff
+	$(MAKE) -C simulation/modelica/statemachines -f Makefile test > $@
+	@echo $@ done
 simulationexternal-functions.log: omc-diff
 	$(MAKE) -C simulation/modelica/external_functions -f Makefile test > $@
 	@echo $@ done
@@ -361,6 +372,9 @@ simulationinitialization.log: omc-diff
 simulationqss.log: omc-diff
 	$(MAKE) -C simulation/modelica/qss -f Makefile test > $@
 	@echo $@ done
+frontEndUnitCheck.log: omc-diff
+	$(MAKE) -C simulation/modelica/NFunitcheck -f Makefile test > $@
+	@echo $@ done	
 simulationunitcheck.log: omc-diff
 	$(MAKE) -C simulation/modelica/unitcheck -f Makefile test > $@
 	@echo $@ done
@@ -373,17 +387,23 @@ cppruntime.log: omc-diff
 cppruntimeHpcom.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cppruntime/hpcom -f Makefile test  > $@
 	@echo $@ done
+cppruntimeOMEdit.log: omc-diff
+	$(MAKE) -j1 -C openmodelica/cppruntime/omedit -f Makefile test  > $@
+	@echo $@ done
 cppruntimeFMU1.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cppruntime/fmu/modelExchange/1.0 -f Makefile test  > $@
 	@echo $@ done
 cppruntimeFMU2.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cppruntime/fmu/modelExchange/2.0 -f Makefile test  > $@
 	@echo $@ done
-cppruntimeUmfpack.log: omc-diff
-	$(MAKE) -j1 -C openmodelica/cppruntime/umfpack -f Makefile test  > $@
-	@echo $@ done
 cppruntimeStaticLinking.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cppruntime/staticLinking -f Makefile test  > $@
+	@echo $@ done
+cppruntimeGenDebugSymbols.log: omc-diff
+	$(MAKE) -j1 -C openmodelica/cppruntime/genDebugSymbols -f Makefile test  > $@
+	@echo $@ done
+cppruntimeHardcodedStartValues.log: omc-diff
+	$(MAKE) -j1 -C openmodelica/cppruntime/hardcodedStartValues -f Makefile test  > $@
 	@echo $@ done
 linearization.log: omc-diff
 	$(MAKE) -C openmodelica/linearization -f Makefile test > $@
@@ -484,6 +504,9 @@ xml.log: omc-diff
 parallel.log: omc-diff
 	$(MAKE) -C simulation/modelica/parallel -f Makefile test > $@
 	@echo $@ done
+parameters.log: omc-diff
+	$(MAKE) -C simulation/modelica/parameters -f Makefile test > $@
+	@echo $@ done
 taskGraph.log: omc-diff
 	$(MAKE) -C simulation/modelica/hpcom -f Makefile test > $@
 	@echo $@ done
@@ -499,6 +522,9 @@ xmlFiles.log: omc-diff
 	@echo $@ done
 simoptions.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cruntime/simoptions -f Makefile test  > $@
+	@echo $@ done
+sensitivities.log: omc-diff
+	$(MAKE) -j1 -C openmodelica/cruntime/sensitivities -f Makefile test  > $@
 	@echo $@ done
 dumpCruntime.log: omc-diff
 	$(MAKE) -j1 -C openmodelica/cruntime/debugDumps -f Makefile test  > $@
@@ -527,14 +553,20 @@ gitlibraries.log: omc-diff
 cse.log: omc-diff
 	$(MAKE) -C simulation/modelica/commonSubExp -f Makefile test > $@
 	@echo $@ done
-modelica3d.log: omc-diff
-	$(MAKE) -C simulation/libraries/3rdParty/Modelica3D -f Makefile test > $@
-	@echo $@ done
 hummod.log: omc-diff
 	$(MAKE) -C simulation/libraries/3rdParty/HumMod -f Makefile test > $@
 	@echo $@ done
 openmodelicadiff.log: omc-diff
 	$(MAKE) -C openmodelica/diff -f Makefile test > $@
+	@echo $@ done
+scalable.log: omc-diff
+	$(MAKE) -C simulation/libraries/3rdParty/ScalableTestSuite -f Makefile test > $@
+	@echo $@ done
+requirements.log: omc-diff
+	$(MAKE) -C openmodelica/requirements -f Makefile test > $@
+	@echo $@ done
+device.log: omc-diff
+	$(MAKE) -C simulation/libraries/3rdParty/Modelica_DeviceDrivers -f Makefile test > $@
 	@echo $@ done
 
 failingtest: omc-diff
@@ -587,10 +619,12 @@ clean_g_2 :
 	$(MAKE) -C metamodelica/meta -f Makefile clean
 	$(MAKE) -C openmodelica/cppruntime -f Makefile clean
 	$(MAKE) -C openmodelica/cppruntime/hpcom -f Makefile clean
+	$(MAKE) -C openmodelica/cppruntime/omedit -f Makefile clean
 	$(MAKE) -C openmodelica/cppruntime/fmu/modelExchange/1.0 -f Makefile clean
 	$(MAKE) -C openmodelica/cppruntime/fmu/modelExchange/2.0 -f Makefile clean
-	$(MAKE) -C openmodelica/cppruntime/umfpack -f Makefile clean
 	$(MAKE) -C openmodelica/cppruntime/staticLinking -f Makefile clean
+	$(MAKE) -C openmodelica/cppruntime/genDebugSymbols -f Makefile clean
+	$(MAKE) -C openmodelica/cppruntime/hardcodedStartValues -f Makefile clean
 	$(MAKE) -C openmodelica/cruntime/optimization/basic -f Makefile clean
 	$(MAKE) -C openmodelica/cruntime/xmlFiles -f Makefile clean
 	$(MAKE) -C openmodelica/debugDumps -f Makefile clean
@@ -622,6 +656,8 @@ clean_g_2 :
 	$(MAKE) -C simulation/modelica/packages -f Makefile clean
 	$(MAKE) -C simulation/modelica/records -f Makefile clean
 	$(MAKE) -C simulation/modelica/types -f Makefile clean
+	$(MAKE) -C simulation/modelica/NFunitcheck -f Makefile clean
+	
 
 clean_g_3 :
 	$(MAKE) -C flattening/libraries/msl22/modelicaAdditions -f Makefile clean
@@ -668,7 +704,7 @@ git-sanity-check: git-clean
 	find -name "*.mat" >> invalid-files.log
 	find -name "*.csv" >> invalid-files.log
 	(find -type f -executable -exec file -i '{}' ";" | grep -s charset=binary >> invalid-files.log) || true
-	sort invalid-files.log > invalid-files.sorted
+	sort invalid-files.log | grep -v runtest.db > invalid-files.sorted
 	sort .gitvalidfiles > .gitvalidfiles.sorted
 	comm --check-order -23 invalid-files.sorted .gitvalidfiles.sorted > invalid-files.log
 	cat invalid-files.log

@@ -1,10 +1,11 @@
 // name: DrumBoiler
+// cflags: --flowThreshold=1e-15
 // status: correct
 
 loadModel(Modelica,{"3.2"});
 getErrorString();
 
-setCommandLineOptions("+demoMode");
+setCommandLineOptions("+demoMode --postOptModules-=wrapFunctionCalls");
 getErrorString();
 loadFile("DrumBoiler.mo");
 getErrorString();
@@ -12,7 +13,17 @@ getErrorString();
 optimize(drumBoiler.optDrumBoiler, stopTime=3600, numberOfIntervals=50, tolerance=1e-4,simflags="-lv=LOG_IPOPT_ERROR -optimizerNP 1 -s optimization");
 getErrorString();
 
-res := OpenModelica.Scripting.compareSimulationResults("drumBoiler.optDrumBoiler_res.mat","ReferenceFiles/drumBoiler.optDrumBoiler_ref.mat","drumBoiler.optDrumBoiler_res.csv",0.01,0.0001);
+res := OpenModelica.Scripting.compareSimulationResults("drumBoiler.optDrumBoiler_res.mat","ReferenceFiles/drumBoiler.optDrumBoiler_ref.mat","drumBoiler.optDrumBoiler_res.csv",0.01,0.0001,
+{
+"dq_F",
+"Y_Valve",
+"q_F",
+"controller.x",
+"cost_q_S.u",
+"cost_qm_S.u",
+"conSigma.u",
+"dq_F"
+});
 getErrorString();
 
 // Result:
@@ -25,7 +36,8 @@ getErrorString();
 // record SimulationResult
 //     resultFile = "drumBoiler.optDrumBoiler_res.mat",
 //     simulationOptions = "startTime = 0.0, stopTime = 3600.0, numberOfIntervals = 50, tolerance = 0.0001, method = 'dassl', fileNamePrefix = 'drumBoiler.optDrumBoiler', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = '-lv=LOG_IPOPT_ERROR -optimizerNP 1 -s optimization'",
-//     messages = "
+//     messages = "stdout            | info    | The initialization finished successfully without homotopy method.
+//
 // Optimizer Variables
 // ========================================================
 // State[0]:controller.x(start = 0, nominal = 10, min = -Inf, max = +Inf, init = 0)
@@ -44,29 +56,27 @@ getErrorString();
 //          For more information visit http://projects.coin-or.org/Ipopt
 // ******************************************************************************
 //
-// LOG_IPOPT_ERROR   | info    | max violation is 2.49596 for the constraint $OMC$constarintTerm1(time = 936)
-// LOG_IPOPT_ERROR   | info    | max violation is 214.785 for the constraint $OMC$constarintTerm1(time = 1368)
-// LOG_IPOPT_ERROR   | info    | max violation is 214.653 for the constraint $OMC$constarintTerm1(time = 1368)
-// LOG_IPOPT_ERROR   | info    | max violation is 197.943 for the constraint $OMC$constarintTerm1(time = 1368)
-// LOG_IPOPT_ERROR   | info    | max violation is 112.431 for the constraint $OMC$constarintTerm1(time = 1368)
-// LOG_IPOPT_ERROR   | info    | max violation is 95.7192 for the constraint $OMC$constarintTerm1(time = 720)
-// LOG_IPOPT_ERROR   | info    | max violation is 80.4812 for the constraint $OMC$constarintTerm1(time = 792)
-// LOG_IPOPT_ERROR   | info    | max violation is 30.8436 for the constraint $OMC$constarintTerm1(time = 792)
-// LOG_IPOPT_ERROR   | info    | max violation is 9.27101 for the constraint $OMC$constarintTerm1(time = 1080)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.82645 for the constraint $OMC$constarintTerm1(time = 288)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.582194 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.709321 for the constraint $OMC$constarintTerm1(time = 648)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.222914 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.16801 for the constraint $OMC$constarintTerm1(time = 288)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.350227 for the constraint $OMC$constarintTerm1(time = 1008)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.0566159 for the constraint $OMC$constarintTerm1(time = 1080)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00871552 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.00175985 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 0.000344088 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 6.72625e-05 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.40409e-05 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 3.88222e-06 for the constraint $OMC$constarintTerm1(time = 216)
-// LOG_IPOPT_ERROR   | info    | max violation is 1.95169e-06 for the constraint $OMC$constarintTerm1(time = 216)
+// LOG_IPOPT_ERROR   | info    | max violation is 2.49596 for the constraint $con$conSigma_con(time = 936)
+// LOG_IPOPT_ERROR   | info    | max violation is 159.505 for the constraint $con$conSigma_con(time = 1368)
+// LOG_IPOPT_ERROR   | info    | max violation is 157.079 for the constraint $con$conSigma_con(time = 1368)
+// LOG_IPOPT_ERROR   | info    | max violation is 138.617 for the constraint $con$conSigma_con(time = 1368)
+// LOG_IPOPT_ERROR   | info    | max violation is 58.0565 for the constraint $con$conSigma_con(time = 1368)
+// LOG_IPOPT_ERROR   | info    | max error is 0.545275 for the approximation of the state evaporator.p(time = 1368)
+// LOG_IPOPT_ERROR   | info    | max violation is 36.0502 for the constraint $con$conSigma_con(time = 1080)
+// LOG_IPOPT_ERROR   | info    | max error is 0.0412626 for the approximation of the state evaporator.p(time = 1224)
+// LOG_IPOPT_ERROR   | info    | max error is 0.0203368 for the approximation of the state evaporator.p(time = 3600)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00282628 for the approximation of the state evaporator.p(time = 3600)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00171536 for the approximation of the state evaporator.p(time = 3600)
+// LOG_IPOPT_ERROR   | info    | max error is 0.00131765 for the approximation of the state evaporator.p(time = 3600)
+// LOG_IPOPT_ERROR   | info    | max error is 5.01892e-05 for the approximation of the state evaporator.p(time = 1224)
+// LOG_IPOPT_ERROR   | info    | max error is 3.24252e-06 for the approximation of the state evaporator.p(time = 1224)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.47354e-06 for the constraint $con$conSigma_con(time = 216)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.48405e-06 for the constraint $con$conSigma_con(time = 216)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.49979e-06 for the constraint $con$conSigma_con(time = 216)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.49983e-06 for the constraint $con$conSigma_con(time = 216)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.5e-06 for the constraint $con$conSigma_con(time = 360)
+// LOG_IPOPT_ERROR   | info    | max violation is 1.5e-06 for the constraint $con$conSigma_con(time = 288)
+// stdout            | info    | The simulation finished successfully.
 // "
 // end SimulationResult;
 // ""

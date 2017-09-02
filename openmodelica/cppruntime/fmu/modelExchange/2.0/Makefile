@@ -2,9 +2,14 @@ TEST = ../../../../../rtest -v
 
 
 TESTFILES = \
-CoupledClutches.mos
+DIC_FMU2_CPP.mos \
+testFMU2MatrixIO.mos \
+testModelDescription.mos \
+testDrumBoiler.mos
 
-FAILINGTESTFILES =
+FAILINGTESTFILES = \
+Crane_FMU2_CPP.mos \
+CoupledClutches_FMU2_CPP.mos
 
 DEPENDENCIES = \
 *.mo \
@@ -25,7 +30,8 @@ test:
 
 clean :
 	@echo $(DEPENDENCIES) | sed 's/ /\\|/g' > deps.tmp
-	@rm -f $(CLEAN)
+	@rm -rf $(CLEAN)
+	@rm *_me_FMU.mo
 
 getdeps:
 	@echo $(DEPENDENCIES) | sed 's/ /\\|/g' > deps.tmp

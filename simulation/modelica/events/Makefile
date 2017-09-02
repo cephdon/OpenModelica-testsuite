@@ -1,12 +1,14 @@
 TEST = ../../../rtest -v
 
 TESTFILES = \
+bug1228.mos \
 bug2667.mos \
 bug2718.mos \
 bug2752.mos \
 bug2808.mos \
 bug3092.mos \
 bug3358.mos \
+bug4419.mos \
 ChatteringEventsTest1.mos \
 ChatteringEventsTest2.mos \
 CheckEvents.mos \
@@ -19,18 +21,19 @@ EventTests3.mos \
 IntegerZeroCrossings.mos \
 MathEventFuncs1.mos \
 MathEventFuncs2.mos \
-TestNoEventsFlags.mos \
+Reinit.mos \
 sample1.mos \
 sample2.mos \
 ServerWithQueue.mos \
+TestNoEventsFlags.mos \
+whenInAlgorithm.mos \
 whenTest1.mos \
+whenTest2.mos \
 ZeroCrossing.mos \
-
 
 # test that currently fail. Move up when fixed. 
 # Run make testfailing
 FAILINGTESTFILES=  \
-bug1228.mos \
 ChatteringFunctionTest1.mos \
 ChatteringFunctionTest2.mos \
 ChatteringNoEventsTest1.mos \

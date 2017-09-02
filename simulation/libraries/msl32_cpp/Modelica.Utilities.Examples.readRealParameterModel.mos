@@ -17,7 +17,7 @@ compareVars :=
    "w_rel0"
 };
 
-runScript("common.mos");getErrorString();
+simulationRuntime := OpenModelicaModelTesting.SimulationRuntime.Cpp;
 
 runScript(modelTesting);getErrorString();
 
@@ -28,10 +28,7 @@ runScript(modelTesting);getErrorString();
 // OpenModelicaModelTesting.Kind.VerifiedSimulation
 // Modelica.Utilities.Examples.readRealParameterModel
 // {"J","phi_rel0","w_rel0"}
-// "OpenModelicaModelTesting.SimulationRuntime.Cpp
-// \"ReferenceFiles/Modelica.Utilities.Examples.readRealParameterModel.mat\"
-// "
-// ""
+// OpenModelicaModelTesting.SimulationRuntime.Cpp
 // Simulation options: startTime = 0.0, stopTime = 1.01, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Modelica.Utilities.Examples.readRealParameterModel', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''
 // Result file: Modelica.Utilities.Examples.readRealParameterModel_res.mat
 // Files Equal!

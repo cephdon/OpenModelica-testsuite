@@ -1,7 +1,7 @@
 // name: const14.mo
 // keywords:
 // status: correct
-// cflags: +d=scodeInst
+// cflags: -d=newInst
 //
 
 package B
@@ -26,9 +26,8 @@ model M
   Integer x = A.B.A.B.i;
 end M;
 
-
 // Result:
 // class M
-//   Integer x = 2;
+//   Integer x = A.B.A.B.i;
 // end M;
 // endResult

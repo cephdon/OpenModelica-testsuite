@@ -2,23 +2,26 @@
 // status: correct
 // teardown_command: rm -f Util_* UtilTest_*
 
-setCommandLineOptions("+g=MetaModelica +n=1");
+setCommandLineOptions("-g=MetaModelica -n=1");
 echo(false);
 prefixPath := "../../../OMCompiler/Compiler/Util/";
 echo(true);
 loadFiles({
+  prefixPath + "DoubleEndedList.mo",
   prefixPath + "Print.mo",
   prefixPath + "ErrorExt.mo",
   prefixPath + "Error.mo",
   prefixPath + "Util.mo",
   prefixPath + "List.mo",
+  prefixPath + "Mutable.mo",
   prefixPath + "System.mo",
   prefixPath + "StringUtil.mo",
   "UtilTest.mo"
 });
 getErrorString();
-setCommandLineOptions("+d=rml");
+setCommandLineOptions("-d=rml,noevalfunc,gen");
 listLength(List.intRange2(1, 22000));
+setCommandLineOptions("-d=evalfunc");
 getErrorString();
 List.intRange2(1, 10);
 getErrorString();
@@ -79,6 +82,7 @@ getErrorString();
 // ""
 // true
 // 22000
+// true
 // ""
 // {1,2,3,4,5,6,7,8,9,10}
 // ""

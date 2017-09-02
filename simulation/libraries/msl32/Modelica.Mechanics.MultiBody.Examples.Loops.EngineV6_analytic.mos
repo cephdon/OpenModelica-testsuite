@@ -32,37 +32,21 @@ runScript(modelTesting);getErrorString();
 // {"load.phi","load.w","filter.x[1]","filter.x[2]"}
 // Simulation options: startTime = 0.0, stopTime = 1.01, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Modelica.Mechanics.MultiBody.Examples.Loops.EngineV6_analytic', options = '', outputFormat = 'mat', variableFilter = 'time|load.phi|load.w|filter.x.1.|filter.x.2.', cflags = '', simflags = ' -abortSlowSimulation -alarm=360 -emit_protected'
 // Result file: Modelica.Mechanics.MultiBody.Examples.Loops.EngineV6_analytic_res.mat
+// Messages: stdout            | info    | The initialization finished successfully without homotopy method.
+// stdout            | info    | The simulation finished successfully.
+//
 // Files Equal!
 // Notification: Model statistics after passing the front-end and creating the data structures used by the back-end:
 //  * Number of equations: 9016
 //  * Number of variables: 9016
-// Notification: Model statistics after passing the back-end for simulation:
-//  * Number of independent subsystems: 20
-//  * Number of states: 4 (load.phi,load.w,filter.x[1],filter.x[2])
-//  * Number of discrete variables: 0 ('+d=discreteinfo' for list of discrete vars)
-//  * Number of discrete states: 0 ('+d=discreteinfo' for list of discrete states)
-//  * Top-level inputs: 0
-// Notification: Strong component statistics for simulation (1215):
-//  * Single equations (assignments): 1214
-//  * Array equations: 0
-//  * Algorithm blocks: 0
-//  * Record equations: 0
-//  * When equations: 0
-//  * If-equations: 0
-//  * Equation systems (linear and non-linear blocks): 0
-//  * Torn equation systems: 1
-//  * Mixed (continuous/discrete) equation systems: 0
-// Notification: Torn system details:
-//  * Linear torn systems: 1 {1 331}
-//  * Non-linear torn systems: 0
 // Notification: Model statistics after passing the back-end for initialization:
-//  * Number of independent subsystems: 1986
+//  * Number of independent subsystems: 1514
 //  * Number of states: 0 ()
-//  * Number of discrete variables: 369 ('+d=discreteinfo' for list of discrete vars)
-//  * Number of discrete states: 0 ('+d=discreteinfo' for list of discrete states)
+//  * Number of discrete variables: 333 ('-d=discreteinfo' for list of discrete vars)
+//  * Number of discrete states: 0 ('-d=discreteinfo' for list of discrete states)
 //  * Top-level inputs: 0
-// Notification: Strong component statistics for initialization (3852):
-//  * Single equations (assignments): 3845
+// Notification: Strong component statistics for initialization (2774):
+//  * Single equations (assignments): 2767
 //  * Array equations: 6
 //  * Algorithm blocks: 0
 //  * Record equations: 0
@@ -71,8 +55,27 @@ runScript(modelTesting);getErrorString();
 //  * Equation systems (linear and non-linear blocks): 0
 //  * Torn equation systems: 1
 //  * Mixed (continuous/discrete) equation systems: 0
-// Notification: Torn system details:
-//  * Linear torn systems: 1 {1 331}
+// Notification: Torn system details for strict tearing set:
+//  * Linear torn systems: 1 {(3,77.8%) 519}
+//  * Non-linear torn systems: 0
+// Notification: Model statistics after passing the back-end for simulation:
+//  * Number of independent subsystems: 112
+//  * Number of states: 4 (load.phi,load.w,filter.x[1],filter.x[2])
+//  * Number of discrete variables: 0 ('-d=discreteinfo' for list of discrete vars)
+//  * Number of discrete states: 0 ('-d=discreteinfo' for list of discrete states)
+//  * Top-level inputs: 0
+// Notification: Strong component statistics for simulation (1325):
+//  * Single equations (assignments): 1324
+//  * Array equations: 0
+//  * Algorithm blocks: 0
+//  * Record equations: 0
+//  * When equations: 0
+//  * If-equations: 0
+//  * Equation systems (linear and non-linear blocks): 0
+//  * Torn equation systems: 1
+//  * Mixed (continuous/discrete) equation systems: 0
+// Notification: Torn system details for strict tearing set:
+//  * Linear torn systems: 1 {(1,100.0%) 419}
 //  * Non-linear torn systems: 0
 //
 // "true

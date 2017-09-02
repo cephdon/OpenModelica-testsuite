@@ -16,6 +16,7 @@ CM.mos \
 CM2.mos \
 DM.mos \
 DMwarm.mos \
+DMwarmCsv.mos \
 LoopTest.mos \
 LRB.mos \
 LRB2.mos \
@@ -26,6 +27,7 @@ ocpWithInputs.mos \
 OSP.mos \
 OSP2.mos \
 pendel.mos \
+reduce1.mos \
 SC.mos \
 staticOP.mos \
 VDP.mos \

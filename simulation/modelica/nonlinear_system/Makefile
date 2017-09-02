@@ -2,6 +2,7 @@ TEST = ../../../rtest -v
 
 TESTFILES = \
 bug_2841.mos \
+bug_3527.mos \
 nanTest.mos \
 nonlinear.mos \
 nonlinear_kinsol.mos \
@@ -25,7 +26,6 @@ problem3_newton.mos \
 problem3_symjac.mos \
 problem3_symjac_tearing.mos \
 problem4.mos \
-problem4_newton.mos \
 problem4_symjac.mos \
 problem4_symjac_tearing.mos \
 problem5.mos \
@@ -44,6 +44,9 @@ problem8_newton.mos \
 problem9.mos \
 problem10.mos \
 problem11.mos \
+problem12.mos \
+TestInputIteration.mos \
+TestFalseIterationNLS.mos \
 
 # test that currently fail. Move up when fixed. 
 # Run make testfailing
@@ -53,6 +56,7 @@ nanTest_kinsol.mos \
 nonlinearDelayTest_kinsol.mos \
 problem2_kinsol.mos \
 problem4_kinsol.mos \
+problem4_newton.mos \
 problem5_kinsol.mos \
 problem5_symjac.mos \
 problem5_symjac_tearing.mos \
